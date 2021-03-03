@@ -9,7 +9,7 @@ const app = express();
 app.use(cors());
 app.use(express.json()); //для парсинга json данных
 
-app.use("/api", router);
+app.use("/", router);
 
 app.listen(PORT, () => {
     console.log("Server started on port", PORT);

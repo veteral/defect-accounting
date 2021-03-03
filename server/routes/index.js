@@ -1,7 +1,7 @@
 const Router = require("express");
 const router = new Router();
-const objectController = require("../controllers/objectController");
+const objectRouter = require("./objectRouter");
 
-router.use("/", objectController.getObject);
+router.use("/", objectRouter);
 
 module.exports = router;
