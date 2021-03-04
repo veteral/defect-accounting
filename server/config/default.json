@@ -1,3 +1,4 @@
 {
-    "serverPort": 5000
+    "serverPort": 5000,
+    "pathDB": "C:\\PROJECTS\\APPDefectAccounting\\server\\data\\"
 }

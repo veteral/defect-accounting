@@ -1,10 +1,12 @@
 const Router = require("express");
 const router = new Router();
-const objectController = require("../controllers/objectController");
+//const objectController = require("../controllers/objectController");
+const controller = require("../controllers/objectController");
 
-router.get("/", objectController.getAllObjects);
-router.get("/:id", objectController.getObject);
-router.post("/", objectController.setObject);
-router.delete("/:id", objectController.deleteObject);
+//router.get("/", controller.getAllObjects);
+router.get("/", controller.getAllObjects);
+router.get("/:id", controller.getOneObject);
+router.post("/", controller.setObject);
+router.delete("/:id", controller.deleteObject);
 
 module.exports = router;
