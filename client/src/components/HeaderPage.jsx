@@ -10,7 +10,7 @@ export default function Headerpage() {
                 <Menu
                     theme="dark"
                     mode="horizontal"
-                    defaultSelectedKeys={["2"]}
+                    defaultSelectedKeys={["1"]}
                     style={{ fontSize: "20px", width: "100%" }}
                 >
                     <Menu.Item key="1"><Link to={"/"}>Повторы</Link></Menu.Item>
