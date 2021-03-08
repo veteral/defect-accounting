@@ -16,7 +16,8 @@ export default function Headerpage() {
                     <Menu.Item key="1"><Link to={"/"}>Повторы</Link></Menu.Item>
                     <Menu.Item key="2"><Link to={"/objects"}>Объекты</Link></Menu.Item>
                     <Menu.Item key="3"><Link to={"/reports"}>Отчеты</Link></Menu.Item>
-                    <Menu.Item key="4"><Link to={"/about"}>О программе</Link></Menu.Item>
+                    <Menu.Item key="4"><Link to={"/defects"}>Виды срабатываний</Link></Menu.Item>
+                    <Menu.Item key="5"><Link to={"/about"}>О программе</Link></Menu.Item>
                 </Menu>
             </div>
         </Header>
