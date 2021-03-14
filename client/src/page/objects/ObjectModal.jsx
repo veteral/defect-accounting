@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, Button } from "antd";
+import { Modal } from "antd";
 import { ObjectForm } from "./ObjectForm";
 
 export const ObjectModal = ({
@@ -7,7 +7,8 @@ export const ObjectModal = ({
   handleCancel,
   handleOk,
 }) => {
-  return (
+  console.log('modal', isModalVisible);
+  return (    
     <>      
       <Modal
         title="Basic Modal"

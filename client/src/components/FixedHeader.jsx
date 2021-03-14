@@ -2,20 +2,8 @@ import { useState } from "react";
 import { Affix, Button } from "antd";
 import { ObjectModal } from "../page/objects/ObjectModal";
 
-export const FixedHeader = ({ title, buttonTitle }) => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
-
-  const handleOk = () => {
-    setIsModalVisible(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
-
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
+export const FixedHeader = ({ title, buttonTitle, handleOnClick }) => {
+  
   return (
     <>
       <Affix offsetTop={0}>
@@ -28,7 +16,7 @@ export const FixedHeader = ({ title, buttonTitle }) => {
           }}
         >
           <h1 style={{ margin: "0px" }}> {title} </h1>
-          <Button type="primary" onClick={showModal}>
+          <Button type="primary" onClick={handleOnClick}>
             {buttonTitle}
           </Button>
         </div>
