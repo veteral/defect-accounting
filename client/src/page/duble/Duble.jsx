@@ -1,4 +1,4 @@
-const Duble = () => {
+export const Duble = () => {
     return (
         <>
             duble
@@ -6,4 +6,3 @@ const Duble = () => {
     );
 }
 
-export default Duble;

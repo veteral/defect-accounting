@@ -1,16 +1,8 @@
 import React, { useState } from 'react';
-import cause from "../cause.json";
+import cause from "../../cause.json";
 import { Table, Input, InputNumber, Popconfirm, Form, Typography } from 'antd';
 const originData = [...cause];
 
-// for (let i = 0; i < 100; i++) {
-//   originData.push({
-//     key: i.toString(),
-//     name: `Edrward ${i}`,
-//     age: 32,
-//     address: `London Park no. ${i}`,
-//   });
-// }
 
 const EditableCell = ({
   editing,
@@ -47,7 +39,7 @@ const EditableCell = ({
   );
 };
 
-const ViewDefects = () => {
+export const Defects = () => {
   const [form] = Form.useForm();
   const [data, setData] = useState(originData);
   const [editingKey, setEditingKey] = useState('');
@@ -183,4 +175,4 @@ const ViewDefects = () => {
 //   return <>Виды срабатываний </>;
 // };
 
-export default ViewDefects;
+

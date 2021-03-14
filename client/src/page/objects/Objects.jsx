@@ -1,8 +1,9 @@
 import { Table } from "antd";
-import data from "../objects.json";
-import TableDefects from "../components/TableDefects";
+import data from "../../objects.json";
+import TableDefects from "../../components/TableDefects";
+import { FixedHeader } from "../../components/FixedHeader";
 
-const Objects = () => {
+export const Objects = () => {
   const columns = [
     {
       title: "Arrow",
@@ -22,12 +23,17 @@ const Objects = () => {
         }
         return 0;
       },
-      showSorterTooltip: false,   
+      showSorterTooltip: false,
     },
   ];
 
   return (
     <>
+      <FixedHeader
+        title={"Список объектов"}
+        buttonTitle={"Добавить объект"}
+        type={"object"}
+      />
       <Table
         dataSource={data}
         columns={columns}
@@ -40,4 +46,4 @@ const Objects = () => {
   );
 };
 
-export default Objects;
+
