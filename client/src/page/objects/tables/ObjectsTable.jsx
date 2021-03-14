@@ -1,9 +1,7 @@
 import { Table } from "antd";
-import data from "../../objects.json";
-import TableDefects from "../../components/TableDefects";
-import { FixedHeader } from "../../components/FixedHeader";
+import {DefectsTable} from "./DefectsTable";
 
-export const ObjectTable = () => {
+export const ObjectsTable = ({ data }) => {
   const columns = [
     {
       title: "Arrow",
@@ -33,7 +31,7 @@ export const ObjectTable = () => {
         dataSource={data}
         columns={columns}
         expandable={{
-          expandedRowRender: (record) => <TableDefects data={record.defects} />,
+          expandedRowRender: (record) => <DefectsTable data={record.defects} />,
           rowExpandable: (record) => record.defects.length > 0,
         }}
       />

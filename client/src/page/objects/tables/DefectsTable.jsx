@@ -1,7 +1,7 @@
 import { Table } from "antd";
 import { DeleteOutlined } from '@ant-design/icons';
 
-const TableDefects = ({ data }) => {
+export const DefectsTable = ({ data }) => {
   const columns = [
     
     { title: "Train", dataIndex: "train", key: "train" },
@@ -20,4 +20,3 @@ const TableDefects = ({ data }) => {
   );
 };
 
-export default TableDefects;
