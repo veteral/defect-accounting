@@ -1,10 +1,10 @@
 import { Switch, Route } from "react-router-dom";
-import { Layout } from 'antd';
+import { Layout } from "antd";
 
-import {Objects} from "../page/objects/Objects";
-import {Duble} from "../page/duble/Duble";
-import {Defects} from "../page/defects/Defects";
-import {About} from "../page/about/About";
+import { Objects } from "../page/objects/Objects";
+import { Duble } from "../page/duble/Duble";
+import { Cause } from "../page/cause/Cause";
+import { About } from "../page/about/About";
 
 const { Content } = Layout;
 
@@ -19,13 +19,12 @@ const ContentPage = () => {
             <Switch>
                 <Route exact path="/" component={Duble} />
                 <Route path="/objects" component={Objects} />
-                <Route path="/defects" component={Defects} />
+                <Route path="/cause" component={Cause} />
                 <Route path="/reports" component={About} />
                 <Route path="/about" component={About} />
-
-            </Switch>            
+            </Switch>
         </Content>
     );
-}
+};
 
 export default ContentPage;

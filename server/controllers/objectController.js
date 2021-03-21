@@ -1,5 +1,6 @@
 const { getData, setData } = require("./fileController");
 const config = require("config");
+const { v4: uuidv4 } = require("uuid");
 
 const path = config.get("pathDB");
 const DB = path + "objects.json";
@@ -19,10 +20,13 @@ module.exports.getOneObject = (req, res) => {
 
 module.exports.setObject = (req, res) => {
     try {
+        let object = { ...req.body, key: uuidv4(), defects: [] }; //уникальный id
+
         const data = getData(DB);
-        data.push(req.body);
+        data.push(object);
+
         setData(DB, data);
-        res.status(201).json(data);
+        res.status(201).json(object);
     } catch (e) {
         console.log(`При добавлении объекта произошла ошибка - ${e}`);
         res.status(500);

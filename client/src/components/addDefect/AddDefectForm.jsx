@@ -1,4 +1,4 @@
-import { Form, Input } from "antd";
+import { Form, Input, TimePicker } from "antd";
 
 const layout = {
     labelCol: {
@@ -9,7 +9,7 @@ const layout = {
     },
 };
 
-export const ObjectForm = ({ form }) => {
+export const AddDefectForm = ({ form }) => {
     return (
         <Form
             form={form}
@@ -89,6 +89,7 @@ export const ObjectForm = ({ form }) => {
                 ]}
             >
                 <Input />
+                <TimePicker />
             </Form.Item>
         </Form>
     );
