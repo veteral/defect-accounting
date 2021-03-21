@@ -13,6 +13,9 @@ build
 data
 data - Copy
 
+#config
+config
+
 # misc
 .DS_Store
 .env.local

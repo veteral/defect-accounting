@@ -1,96 +1,71 @@
-import { Form, Input, TimePicker } from "antd";
+import { Form, Input, DatePicker, TimePicker } from "antd";
+import { SearchSelect } from "./SearchSelect";
 
 const layout = {
-    labelCol: {
-        span: 6,
-    },
-    wrapperCol: {
-        span: 16,
-    },
+  labelCol: {
+    span: 6,
+  },
+  wrapperCol: {
+    span: 16,
+  },
 };
 
 export const AddDefectForm = ({ form }) => {
-    return (
-        <Form
-            form={form}
-            {...layout}
-            name="basic"
-            fields={[
-                {
-                    name: ["passwords"],
-                    value: "1-1-8",
-                },
-                {
-                    name: ["telefone"],
-                    value: "35-84-01",
-                },
-                {
-                    name: ["name"],
-                    value: "Магазин 'Смакота'",
-                },
-            ]}
+  return (
+    <Form form={form} {...layout} name="basic" fields={[]}>
+      <Form.Item
+        label="Объект"
+        name="object"
+        rules={[
+          {
+            required: true,
+            message: "Пожалуйста, выберите объект!",
+          },
+        ]}
+      >
+        <SearchSelect />
+      </Form.Item>
+      <Form.Item
+        label="Номер шлейфа"
+        name="train"
+        rules={[
+          {
+            required: true,
+            message: "Пожалуйста, введите номер шлейфа!",
+          }          
+        ]}        
+      >
+        <Input style={{ width: '100px'}} />
+      </Form.Item>      
+
+      <Form.Item label="Время срабатывания" style={{ marginBottom: 0 }}>
+        <Form.Item
+          name="year"
+          rules={[{ required: true }]}
+          style={{ display: "inline-block", paddingRight: "10px" }}
         >
-            <Form.Item
-                label="Пароль"
-                name="passwords"
-                rules={[
-                    {
-                        required: true,
-                        message: "Пожалуйста, введите пароль!",
-                    },
-                ]}
-            >
-                <Input />
-            </Form.Item>
-            <Form.Item
-                label="Телефон"
-                name="telefone"
-                rules={[
-                    {
-                        required: false,
-                        message: "Пожалуйста, введите телефон!",
-                    },
-                ]}
-            >
-                <Input />
-            </Form.Item>
-            <Form.Item
-                label="Наименование"
-                name="name"
-                rules={[
-                    {
-                        required: true,
-                        message: "Пожалуйста, введите наименование объекта!",
-                    },
-                ]}
-            >
-                <Input />
-            </Form.Item>
-            <Form.Item
-                label="Адрес"
-                name="address"
-                rules={[
-                    {
-                        required: true,
-                        message: "Пожалуйста, введите адрес объекта!",
-                    },
-                ]}
-            >
-                <Input />
-            </Form.Item>
-            <Form.Item
-                label="Прибор"
-                name="device"
-                rules={[
-                    {
-                        required: false,
-                        message: "Пожалуйста, введите прибор!",
-                    },
-                ]}
-            >
-                <Input />
-                <TimePicker />
-            </Form.Item>
-        </Form>
-    );
+          <DatePicker placeholder="дата" />
+        </Form.Item>
+        <Form.Item
+          name="month"
+          rules={[{ required: true }]}
+          style={{ display: "inline-block" }}
+        >
+          <TimePicker placeholder="время" format={"HH:mm"} />
+        </Form.Item>
+      </Form.Item>
+      <Form.Item
+        label="Срабатывание"
+        name="cause"
+        rules={[
+          {
+            required: true,
+            message: "Пожалуйста, выберите причину срабатывния!",
+          },
+        ]}
+      >
+        <SearchSelect />
+      </Form.Item>
+    </Form>
+  );
 };
