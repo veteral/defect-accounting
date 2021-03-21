@@ -25,6 +25,7 @@ export const AddDefectForm = ({ form }) => {
       >
         <SearchSelect />
       </Form.Item>
+
       <Form.Item
         label="Номер шлейфа"
         name="train"
@@ -54,6 +55,7 @@ export const AddDefectForm = ({ form }) => {
           <TimePicker placeholder="время" format={"HH:mm"} />
         </Form.Item>
       </Form.Item>
+      
       <Form.Item
         label="Срабатывание"
         name="cause"
