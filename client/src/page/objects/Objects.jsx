@@ -10,6 +10,7 @@ export const Objects = () => {
 
     useEffect(() => {
         getAllObjects();
+        console.log("data object", data);
         // eslint-disable-next-line
     }, []);
 
