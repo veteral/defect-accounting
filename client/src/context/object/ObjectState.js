@@ -15,14 +15,14 @@ export const ObjectState = ({ children }) => {
         dispatch({ type: GET_ALL_OBJECTS, payload });
     };
 
-    const setObject = async (values) => {        
-        const payload = await request(API_URL + "/objects", "POST", values);        
+    const setObject = async (values) => {
+        const payload = await request(API_URL + "/objects", "POST", values);
         dispatch({ type: SET_OBJECT, payload });
     };
 
     return (
         <ObjectContext.Provider
-            value={{ data: state, getAllObjects, setObject }}
+            value={{ objects: state, getAllObjects, setObject }}
         >
             {children}
         </ObjectContext.Provider>

@@ -14,6 +14,7 @@ export const AddDefectModal = ({ isModalVisible, handleCancel, handleOk }) => {
             onOk={() => {
                 form.validateFields()
                     .then((values) => {
+                        console.log("values - ok", values);
                         form.resetFields();
                         handleOk(values);
                     })
@@ -22,7 +23,7 @@ export const AddDefectModal = ({ isModalVisible, handleCancel, handleOk }) => {
                     });
             }}
         >
-            <AddDefectForm />
+            <AddDefectForm form={form} />
         </Modal>
     );
 };

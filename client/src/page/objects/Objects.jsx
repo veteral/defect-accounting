@@ -3,14 +3,14 @@ import { FixedHeader } from "../../components/FixedHeader";
 import { ObjectsTable } from "./tables/ObjectsTable";
 import { ObjectModal } from "./ObjectModal";
 import { ObjectContext } from "../../context/object/objectContext";
+import { Spin } from "antd";
 
 export const Objects = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const { data, getAllObjects, setObject } = useContext(ObjectContext);
+    const { objects, getAllObjects, setObject } = useContext(ObjectContext);
 
     useEffect(() => {
         getAllObjects();
-        console.log("data object", data);
         // eslint-disable-next-line
     }, []);
 
@@ -27,6 +27,19 @@ export const Objects = () => {
         setIsModalVisible(false);
     };
 
+    if (data.length === 0)
+        return (
+            <div
+                style={{
+                    width: "100%",
+                    margin: "0 auto",
+                    alignContent: "center",
+                }}
+            >
+                <Spin size="large" />
+            </div>
+        );
+
     return (
         <>
             <FixedHeader
@@ -34,7 +47,7 @@ export const Objects = () => {
                 buttonTitle={"Добавить объект"}
                 handleOnClick={showModal}
             />
-            <ObjectsTable data={data} />
+            <ObjectsTable data={objects} />
             <ObjectModal
                 isModalVisible={isModalVisible}
                 handleOk={handleOk}

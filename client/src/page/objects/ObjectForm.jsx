@@ -15,20 +15,22 @@ export const ObjectForm = ({ form }) => {
             form={form}
             {...layout}
             name="basic"
-            fields={[
-                {
-                    name: ["passwords"],
-                    value: "1-1-8",
-                },
-                {
-                    name: ["telefone"],
-                    value: "35-84-01",
-                },
-                {
-                    name: ["name"],
-                    value: "Магазин 'Смакота'",
-                },
-            ]}
+            fields={
+                [
+                    // {
+                    //     name: ["passwords"],
+                    //     value: "1-1-8",
+                    // },
+                    // {
+                    //     name: ["telefone"],
+                    //     value: "35-84-01",
+                    // },
+                    // {
+                    //     name: ["name"],
+                    //     value: "Магазин 'Смакота'",
+                    // },
+                ]
+            }
         >
             <Form.Item
                 label="Пароль"

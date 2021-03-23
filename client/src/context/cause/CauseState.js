@@ -14,7 +14,7 @@ export const CauseState = ({ children }) => {
     };
 
     return (
-        <CauseContext.Provider value={{ data: state, getAllCause }}>
+        <CauseContext.Provider value={{ cause: state, getAllCause }}>
             {children}
         </CauseContext.Provider>
     );

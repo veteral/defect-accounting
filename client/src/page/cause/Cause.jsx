@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { CauseContext } from "../../context/cause/causeContext";
 
 export const Cause = () => {
-    const { data, getAllCause } = useContext(CauseContext);
+    const { cause, getAllCause } = useContext(CauseContext);
 
     useEffect(() => {
         getAllCause();
@@ -11,7 +11,7 @@ export const Cause = () => {
 
     return (
         <>
-            {data.map((el) => (
+            {cause.map((el) => (
                 <div>{el.key}</div>
             ))}
         </>
