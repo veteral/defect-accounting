@@ -1,28 +1,25 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Button } from "antd";
 import { AddDefectModal } from "./AddDefectModal";
-import { CauseContext } from "../../context/cause/causeContext";
+import { ObjectContext } from "../../context/object/objectContext";
+import moment from "moment";
 
 export const AddDefect = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
-    //const { data, getAllCause } = useContext(CauseContext);
-
-    useEffect(() => {
-        // getAllCause();
-        // const cause = data.map((el) => ({
-        //     label: el.Name_L,
-        //     value: el.key,
-        // }));
-        // console.log("use effect cause");
-        // //setOptions(cause);
-    }, []);
+    const { addDefect } = useContext(ObjectContext);
 
     const showModal = () => {
         setIsModalVisible(true);
     };
 
     const handleOk = (values) => {
-        console.log("values", values);
+        //console.log("values", values);
+
+        //const dd = values.date;
+        //moment.lang("ru");
+        //console.log("date", dd.format("DD.MM.YYYY"));
+        //console.log("time", dd.format("HH:mm:ss"));
+        addDefect(values);
         setIsModalVisible(false);
     };
 

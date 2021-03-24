@@ -32,7 +32,7 @@ export const AddDefectForm = ({ form }) => {
                 rules={[
                     {
                         required: true,
-                        message: "Пожалуйста, выберите объект!",
+                        message: "Выберите объект!",
                     },
                 ]}
             >
@@ -47,7 +47,7 @@ export const AddDefectForm = ({ form }) => {
                 >
                     {objects.map((el) => (
                         <Option key={el.key} value={el.key}>
-                            {`${el.passwords} : ${el.name}`}
+                            {`${el.passwords} : ${el.name} : ${el.address}`}
                         </Option>
                     ))}
                 </Select>
@@ -58,7 +58,7 @@ export const AddDefectForm = ({ form }) => {
                 rules={[
                     {
                         required: true,
-                        message: "Пожалуйста, введите номер шлейфа!",
+                        message: "Введите номер шлейфа!",
                     },
                 ]}
             >
@@ -66,15 +66,15 @@ export const AddDefectForm = ({ form }) => {
             </Form.Item>
             <Form.Item label="Время срабатывания" style={{ marginBottom: 0 }}>
                 <Form.Item
-                    name="year"
-                    rules={[{ required: true }]}
+                    name="date"
+                    rules={[{ required: true, message: "Выберите дату!" }]}
                     style={{ display: "inline-block", paddingRight: "10px" }}
                 >
                     <DatePicker placeholder="дата" />
                 </Form.Item>
                 <Form.Item
-                    name="month"
-                    rules={[{ required: true }]}
+                    name="time"
+                    rules={[{ required: true, message: "Выберите время!" }]}
                     style={{ display: "inline-block" }}
                 >
                     <TimePicker placeholder="время" format={"HH:mm"} />
@@ -82,11 +82,11 @@ export const AddDefectForm = ({ form }) => {
             </Form.Item>
             <Form.Item
                 label="Срабатывание"
-                name="cause"
+                name="key_cause"
                 rules={[
                     {
                         required: true,
-                        message: "Пожалуйста, выберите причину срабатывния!",
+                        message: "Выберите причину срабатывния!",
                     },
                 ]}
             >

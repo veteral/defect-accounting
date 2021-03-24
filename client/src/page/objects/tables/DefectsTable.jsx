@@ -3,12 +3,12 @@ import { DeleteOutlined } from "@ant-design/icons";
 
 export const DefectsTable = ({ data }) => {
     const columns = [
-        { title: "train", dataIndex: "train", key: "train" },
-        { title: "date", dataIndex: "date", key: "date" },
-        { title: "time", dataIndex: "time", key: "time" },
-        { title: "key_cause", dataIndex: "key_cause", key: "key_cause" },
+        { title: "шлейф", dataIndex: "train", key: "train" },
+        { title: "дата", dataIndex: "date", key: "date" },
+        { title: "время", dataIndex: "time", key: "time" },
+        { title: "срабатывание", dataIndex: "key_cause", key: "key_cause" },
         {
-            title: "Action",
+            title: "действие",
             dataIndex: "action",
             key: "action",
             render: () => <DeleteOutlined />,

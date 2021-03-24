@@ -27,13 +27,15 @@ export const Objects = () => {
         setIsModalVisible(false);
     };
 
-    if (data.length === 0)
+    if (objects.length === 0)
         return (
             <div
                 style={{
                     width: "100%",
-                    margin: "0 auto",
-                    alignContent: "center",
+                    height: "100vh",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
                 }}
             >
                 <Spin size="large" />
