@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Button } from "antd";
 import { AddDefectModal } from "./AddDefectModal";
 import { ObjectContext } from "../../context/object/objectContext";
-import moment from "moment";
 
 export const AddDefect = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);

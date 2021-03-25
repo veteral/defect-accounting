@@ -68,15 +68,13 @@ module.exports.addDefect = (req, res) => {
         const { id } = req.params;
         console.log(id);
         const objects = getData(DBObjects);
-        const object = objects.filter((item) => id === item.key)[0];
+        const object = objects.find((item) => id === item.key);
+        console.log(object);
         const addDefect = { ...req.body, key: uuidv4() };
 
         object.defects.push(addDefect);
         object.defects.sort((a, b) => {
             return new Date(a.date) - new Date(b.date);
-            //     // if (a < b) return -1;
-            //     // if (a > b) return 1;
-            //     // return 0;
         });
         console.log("object server", object);
         setData(DBObjects, objects);
