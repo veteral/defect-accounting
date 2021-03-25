@@ -1,19 +1,24 @@
 import React, { useContext, useEffect } from "react";
 import { CauseContext } from "../../context/cause/causeContext";
+import { CauseTable } from "../../components/tables/CauseTable";
+import { FixedHeader } from "../../components/FixedHeader";
 
 export const Cause = () => {
-    const { cause, getAllCause } = useContext(CauseContext);
+    const { cause, getCause } = useContext(CauseContext);
 
     useEffect(() => {
-        getAllCause();
+        getCause();
         // eslint-disable-next-line
     }, []);
 
     return (
         <>
-            {cause.map((el) => (
-                <div>{el.key}</div>
-            ))}
+            <FixedHeader
+                title={"Список видов срабатывания"}
+                buttonTitle={"Добавить вид срабатывания"}
+                // handleOnClick={}
+            />
+            <CauseTable data={cause} />
         </>
     );
 };

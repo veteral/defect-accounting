@@ -7,7 +7,6 @@ import { ObjectState } from "./context/object/ObjectState";
 import { CauseState } from "./context/cause/CauseState";
 import { ConfigProvider } from "antd";
 import ruRU from "antd/lib/locale/ru_RU";
-import { DubleContext } from "./context/duble/dubleContext";
 import { DubleState } from "./context/duble/DubleState";
 
 ReactDOM.render(

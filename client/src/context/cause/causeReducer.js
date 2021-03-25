@@ -1,8 +1,8 @@
-import { GET_ALL_CAUSE } from "../actionsType";
+import { GET_CAUSE } from "../actionsType";
 
 export const causeReducer = (state, action) => {
     switch (action.type) {
-        case GET_ALL_CAUSE:
+        case GET_CAUSE:
             return [...action.payload];
 
         // case SET_OBJECT:
