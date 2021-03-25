@@ -36,11 +36,23 @@ module.exports.getOneObject = (req, res) => {
 
 module.exports.setObject = (req, res) => {
     try {
-        let object = { ...req.body, key: uuidv4(), defects: [] }; //уникальный id
+        let object = { ...req.body, key: uuidv4(), defects: [], duble: false }; //уникальный id
 
-        const objects = getData(DB);
+        const objects = getData(DBObjects);
         objects.push(object);
 
+        objects.sort(function (a, b) {
+            if (a.passwords > b.passwords) {
+                return 1;
+            }
+            if (a.passwords < b.passwords) {
+                return -1;
+            }
+            // a должно быть равным b
+            return 0;
+        });
+
+        console.log("objects", objects);
         setData(DBObjects, objects);
         res.status(201).json(objects);
     } catch (e) {
@@ -51,7 +63,7 @@ module.exports.setObject = (req, res) => {
 
 module.exports.deleteObject = (req, res) => {
     try {
-        const data = getData(DB);
+        const data = getData(DBObjects);
         const { id } = req.params;
 
         const objects = data.filter((item) => id !== item.id);
