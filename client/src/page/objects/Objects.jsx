@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { FixedHeader } from "../../components/FixedHeader";
-import { ObjectsTable } from "./tables/ObjectsTable";
+import { ObjectsTable } from "../../components/tables/ObjectsTable";
 import { ObjectModal } from "./ObjectModal";
 import { ObjectContext } from "../../context/object/objectContext";
 import { Spin } from "antd";

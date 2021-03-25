@@ -1,8 +1,8 @@
-import { GET_ALL_CAUSE } from "../actionsType";
+import { GET_DUBLE } from "../actionsType";
 
 export const dubleReducer = (state, action) => {
     switch (action.type) {
-        case GET_ALL_CAUSE:
+        case GET_DUBLE:
             return [...action.payload];
 
         // case SET_OBJECT:
