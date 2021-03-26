@@ -16,11 +16,11 @@ const layout = {
 
 export const AddDefectForm = ({ form }) => {
     const { objects, getAllObjects } = useContext(ObjectContext);
-    const { cause, getAllCause } = useContext(CauseContext);
+    const { cause, getCause } = useContext(CauseContext);
 
     useEffect(() => {
         getAllObjects();
-        getAllCause();
+        getCause();
         // eslint-disable-next-line
     }, []);
 
@@ -70,7 +70,7 @@ export const AddDefectForm = ({ form }) => {
                     rules={[{ required: true, message: "Выберите дату!" }]}
                     style={{ display: "inline-block", paddingRight: "10px" }}
                 >
-                    <DatePicker placeholder="дата" />
+                    <DatePicker placeholder="дата" format="DD/MM/YYYY" />
                 </Form.Item>
                 <Form.Item
                     name="time"

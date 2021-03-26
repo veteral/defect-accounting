@@ -12,9 +12,9 @@ module.exports.getAllObjects = (req, res) => {
 
     const data = objects.map((element) => {
         const defects = element.defects.map((defect) => {
-            const nameCause = cause.find((i) => i.key === defect.key_cause);
+            const nameCause = cause.find((i) => i.key === defect.cause);
             if (nameCause !== undefined) {
-                return { ...defect, key_cause: nameCause.Name_L };
+                return { ...defect, cause: nameCause.Name_L };
             }
             //const nameLong = nameCause;
             return { ...defect };
@@ -81,14 +81,14 @@ module.exports.addDefect = (req, res) => {
         console.log(id);
         const objects = getData(DBObjects);
         const object = objects.find((item) => id === item.key);
-        console.log(object);
+        //console.log(object);
         const addDefect = { ...req.body, key: uuidv4() };
 
         object.defects.push(addDefect);
         object.defects.sort((a, b) => {
             return new Date(a.date) - new Date(b.date);
         });
-        console.log("object server", object);
+        //console.log("object server", object);
         setData(DBObjects, objects);
         res.status(201).json(objects);
     } catch (e) {
