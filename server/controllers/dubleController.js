@@ -6,8 +6,9 @@ const DB = path + "objects.json";
 
 module.exports.getDuble = (req, res) => {
     const objects = getData(DB);
-    const duble = objects.filter((el) => el.duble === true);
-
+    //let duble = [];
+    duble = objects.filter((el) => el.duble === true);
+    //console.log(objects);
     res.json(duble);
 };
 

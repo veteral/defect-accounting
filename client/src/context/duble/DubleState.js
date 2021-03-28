@@ -10,8 +10,9 @@ export const DubleState = ({ children }) => {
 
     const getDuble = async () => {
         const payload = await request(API_URL + "/");
-        //console.log("duble", payload);
-        dispatch({ type: GET_DUBLE, payload });
+       
+        console.log("duble", payload);
+        //dispatch({ type: GET_DUBLE, payload });
     };
 
     return (

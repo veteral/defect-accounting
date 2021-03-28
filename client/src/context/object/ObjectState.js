@@ -36,8 +36,8 @@ export const ObjectState = ({ children }) => {
             values
         );
 
-        //console.log("values posle", values);
-        dispatch({ type: GET_OBJECTS, payload });
+        console.log("values posle", values);
+        //dispatch({ type: GET_OBJECTS, payload });
     };
 
     return (
