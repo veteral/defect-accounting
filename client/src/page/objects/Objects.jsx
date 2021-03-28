@@ -1,9 +1,9 @@
 import { useEffect, useState, useContext } from "react";
 import { FixedHeader } from "../../components/FixedHeader";
-import { ObjectsTable } from "./tables/ObjectsTable";
+import { ObjectsTable } from "../../components/tables/ObjectsTable";
 import { ObjectModal } from "./ObjectModal";
 import { ObjectContext } from "../../context/object/objectContext";
-import { Spin } from "antd";
+import { Preloader } from "../../components/Preloader";
 
 export const Objects = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -27,20 +27,7 @@ export const Objects = () => {
         setIsModalVisible(false);
     };
 
-    if (objects.length === 0)
-        return (
-            <div
-                style={{
-                    width: "100%",
-                    height: "100vh",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                }}
-            >
-                <Spin size="large" />
-            </div>
-        );
+    if (objects.length === 0) return <Preloader />;
 
     return (
         <>

@@ -1,11 +1,11 @@
 const Router = require("express");
 const router = new Router();
 const objectRouter = require("./objectRouter");
-//const defectRouter = require("./defectRouter");
+const dubleRouter = require("./dubleRouter");
 const causeRouter = require("./causeRouter");
 
+router.use("/", dubleRouter);
 router.use("/objects", objectRouter);
-//router.use("/defects", wearRouter);
 router.use("/cause", causeRouter);
 
 module.exports = router;

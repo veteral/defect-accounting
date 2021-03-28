@@ -3,7 +3,7 @@ import { ObjectContext } from "./objectContext";
 import { objectReducer } from "./objectReducer";
 import { API_URL } from "../../config";
 import { request } from "../request";
-import { GET_OBJECTS, SET_OBJECT } from "../actionsType";
+import { GET_OBJECTS } from "../actionsType";
 
 export const ObjectState = ({ children }) => {
     const initialState = [];
@@ -23,14 +23,13 @@ export const ObjectState = ({ children }) => {
 
     const addDefect = async (values) => {
         const id = values.object;
-        console.log("values do id", id);
-        console.log("values do", values);
 
         values = {
             ...values,
             date: values.date.format("DD.MM.YYYY"),
             time: values.time.format("HH:mm:ss"),
         };
+
         const payload = await request(
             API_URL + "/objects/defect/" + id,
             "POST",
@@ -38,7 +37,7 @@ export const ObjectState = ({ children }) => {
         );
 
         console.log("values posle", values);
-        dispatch({ type: GET_OBJECTS, payload });
+        //dispatch({ type: GET_OBJECTS, payload });
     };
 
     return (

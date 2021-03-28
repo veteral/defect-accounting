@@ -6,7 +6,7 @@ export const DefectsTable = ({ data }) => {
         { title: "шлейф", dataIndex: "train", key: "train" },
         { title: "дата", dataIndex: "date", key: "date" },
         { title: "время", dataIndex: "time", key: "time" },
-        { title: "срабатывание", dataIndex: "key_cause", key: "key_cause" },
+        { title: "срабатывание", dataIndex: "cause", key: "cause" },
         {
             title: "действие",
             dataIndex: "action",

@@ -3,18 +3,18 @@ import { CauseContext } from "./causeContext";
 import { causeReducer } from "../cause/causeReducer";
 import { API_URL } from "../../config";
 import { request } from "../request";
-import { GET_ALL_CAUSE } from "../actionsType";
+import { GET_CAUSE } from "../actionsType";
 
 export const CauseState = ({ children }) => {
     const [state, dispatch] = useReducer(causeReducer, []);
 
-    const getAllCause = async () => {
+    const getCause = async () => {
         const payload = await request(API_URL + "/cause");
-        dispatch({ type: GET_ALL_CAUSE, payload });
+        dispatch({ type: GET_CAUSE, payload });
     };
 
     return (
-        <CauseContext.Provider value={{ cause: state, getAllCause }}>
+        <CauseContext.Provider value={{ cause: state, getCause }}>
             {children}
         </CauseContext.Provider>
     );
