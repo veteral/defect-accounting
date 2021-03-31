@@ -3,7 +3,7 @@ import { ObjectContext } from "./objectContext";
 import { objectReducer } from "./objectReducer";
 import { API_URL } from "../../config";
 import { request } from "../request";
-import { GET_OBJECTS, ADD_DEFECT } from "../actionsType";
+import { GET_OBJECTS, ADD_DEFECT, GET_DUBLE } from "../actionsType";
 
 export const ObjectState = ({ children }) => {
     const initialState = {
@@ -16,6 +16,7 @@ export const ObjectState = ({ children }) => {
     const getAllObjects = async () => {
         const payload = await request(API_URL + "/objects");
         //console.log("payload", payload);
+        //console.log("payload objects", payload);
         dispatch({ type: GET_OBJECTS, payload });
     };
 
@@ -39,7 +40,7 @@ export const ObjectState = ({ children }) => {
             values
         );
 
-        const duble = objects.filter((el) => el.duble === true);
+        const duble = dubleObjects(objects);
 
         const payload = {
             objects: [...objects],
@@ -49,9 +50,20 @@ export const ObjectState = ({ children }) => {
         dispatch({ type: ADD_DEFECT, payload });
     };
 
+    const getDuble = async () => {
+        const objects = await request(API_URL + "/");
+        const payload = dubleObjects(objects);
+        //console.log("payload duble", payload);
+        dispatch({ type: GET_DUBLE, payload });
+    };
+
+    function dubleObjects(objects) {
+        return objects.filter((el) => el.duble === true);
+    }
+
     return (
         <ObjectContext.Provider
-            value={{ state, getAllObjects, setObject, addDefect }}
+            value={{ state, getAllObjects, setObject, addDefect, getDuble }}
         >
             {children}
         </ObjectContext.Provider>

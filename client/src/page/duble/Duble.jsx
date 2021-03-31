@@ -5,19 +5,19 @@ import { Preloader } from "../../components/Preloader";
 import { ObjectContext } from "../../context/object/objectContext";
 
 export const Duble = () => {
-    const { duble, getDuble } = useContext(DubleContext);
-    const { state } = useContext(ObjectContext);
+    //const { duble, getDuble } = useContext(DubleContext);
+    const { state, getDuble } = useContext(ObjectContext);
 
     useEffect(() => {
         getDuble();
         // eslint-disable-next-line
-    }, [state.duble]);
+    }, []);
 
-    if (duble.length === 0) return <Preloader />;
+    //if (duble.length === 0) return <Preloader />;
 
     return (
         <>
-            {state.objects.length !== 0 ? (
+            {state.duble.length !== 0 ? (
                 <ObjectsTable data={state.duble} />
             ) : (
                 <Preloader />
