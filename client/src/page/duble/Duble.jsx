@@ -6,18 +6,22 @@ import { ObjectContext } from "../../context/object/objectContext";
 
 export const Duble = () => {
     const { duble, getDuble } = useContext(DubleContext);
-    const { objects} = useContext(ObjectContext);
+    const { state } = useContext(ObjectContext);
 
     useEffect(() => {
-        getDuble();        
+        getDuble();
         // eslint-disable-next-line
-    }, [objects]);
+    }, [state.duble]);
 
     if (duble.length === 0) return <Preloader />;
 
     return (
         <>
-            <ObjectsTable data={duble} />
+            {state.objects.length !== 0 ? (
+                <ObjectsTable data={state.duble} />
+            ) : (
+                <Preloader />
+            )}
         </>
     );
 };

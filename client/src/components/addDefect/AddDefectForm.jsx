@@ -15,7 +15,7 @@ const layout = {
 };
 
 export const AddDefectForm = ({ form }) => {
-    const { objects, getAllObjects } = useContext(ObjectContext);
+    const { state, getAllObjects } = useContext(ObjectContext);
     const { cause, getCause } = useContext(CauseContext);
 
     useEffect(() => {
@@ -45,7 +45,7 @@ export const AddDefectForm = ({ form }) => {
                             .indexOf(input.toLowerCase()) >= 0
                     }
                 >
-                    {objects.map((el) => (
+                    {state.objects.map((el) => (
                         <Option key={el.key} value={el.key}>
                             {`${el.passwords} : ${el.name} : ${el.address}`}
                         </Option>
@@ -70,7 +70,7 @@ export const AddDefectForm = ({ form }) => {
                     rules={[{ required: true, message: "Выберите дату!" }]}
                     style={{ display: "inline-block", paddingRight: "10px" }}
                 >
-                    <DatePicker placeholder="дата" format="DD/MM/YYYY" />
+                    <DatePicker placeholder="дата" format="DD-MM-YYYY" />
                 </Form.Item>
                 <Form.Item
                     name="time"
@@ -82,7 +82,7 @@ export const AddDefectForm = ({ form }) => {
             </Form.Item>
             <Form.Item
                 label="Срабатывание"
-                name="key_cause"
+                name="cause"
                 rules={[
                     {
                         required: true,

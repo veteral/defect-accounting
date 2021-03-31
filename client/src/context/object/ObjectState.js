@@ -3,10 +3,13 @@ import { ObjectContext } from "./objectContext";
 import { objectReducer } from "./objectReducer";
 import { API_URL } from "../../config";
 import { request } from "../request";
-import { GET_OBJECTS } from "../actionsType";
+import { GET_OBJECTS, ADD_DEFECT } from "../actionsType";
 
 export const ObjectState = ({ children }) => {
-    const initialState = [];
+    const initialState = {
+        objects: [],
+        duble: [],
+    };
 
     const [state, dispatch] = useReducer(objectReducer, initialState);
 
@@ -30,19 +33,25 @@ export const ObjectState = ({ children }) => {
             time: values.time.format("HH:mm:ss"),
         };
 
-        const payload = await request(
+        const objects = await request(
             API_URL + "/objects/defect/" + id,
             "POST",
             values
         );
 
+        const duble = objects.filter((el) => el.duble === true);
+
+        const payload = {
+            objects: [...objects],
+            duble: [...duble],
+        };
         console.log("values posle", values);
-        //dispatch({ type: GET_OBJECTS, payload });
+        dispatch({ type: ADD_DEFECT, payload });
     };
 
     return (
         <ObjectContext.Provider
-            value={{ objects: state, getAllObjects, setObject, addDefect }}
+            value={{ state, getAllObjects, setObject, addDefect }}
         >
             {children}
         </ObjectContext.Provider>

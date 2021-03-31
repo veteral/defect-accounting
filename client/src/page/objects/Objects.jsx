@@ -7,7 +7,7 @@ import { Preloader } from "../../components/Preloader";
 
 export const Objects = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const { objects, getAllObjects, setObject } = useContext(ObjectContext);
+    const { state, getAllObjects, setObject } = useContext(ObjectContext);
 
     useEffect(() => {
         getAllObjects();
@@ -27,8 +27,6 @@ export const Objects = () => {
         setIsModalVisible(false);
     };
 
-    if (objects.length === 0) return <Preloader />;
-
     return (
         <>
             <FixedHeader
@@ -36,7 +34,11 @@ export const Objects = () => {
                 buttonTitle={"Добавить объект"}
                 handleOnClick={showModal}
             />
-            <ObjectsTable data={objects} />
+            {state.objects.length !== 0 ? (
+                <ObjectsTable data={state.objects} />
+            ) : (
+                <Preloader />
+            )}
             <ObjectModal
                 isModalVisible={isModalVisible}
                 handleOk={handleOk}
