@@ -20,6 +20,7 @@ module.exports.setCause = (req, res) => {
         res.status(500);
     }
 };
+
 module.exports.deleteCause = (req, res) => {
     try {
         const data = getData(DB);

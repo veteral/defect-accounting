@@ -2,7 +2,6 @@ const express = require("express");
 const config = require("config");
 const cors = require("cors");
 const router = require("./routes/index");
-const path = require("path");
 
 const PORT = config.get("serverPort");
 
