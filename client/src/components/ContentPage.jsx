@@ -5,6 +5,7 @@ import { Objects } from "../page/objects/Objects";
 import { Duble } from "../page/duble/Duble";
 import { Cause } from "../page/cause/Cause";
 import { About } from "../page/about/About";
+import { ControlReport } from "../page/reports/ControlReport";
 
 const { Content } = Layout;
 
@@ -20,7 +21,7 @@ const ContentPage = () => {
                 <Route exact path="/" component={Duble} />
                 <Route path="/objects" component={Objects} />
                 <Route path="/cause" component={Cause} />
-                <Route path="/reports" component={About} />
+                <Route path="/reports" component={ControlReport} />
                 <Route path="/about" component={About} />
             </Switch>
         </Content>

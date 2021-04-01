@@ -71,6 +71,8 @@ module.exports.addDefect = (req, res) => {
 
         const object = objects.find((item) => id === item.key);
 
+        console.log("object", object);
+
         const addDefect = { ...req.body, key: uuidv4() };
 
         // выявляем повтор срабатывания:

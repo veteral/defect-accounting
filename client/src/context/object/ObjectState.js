@@ -35,7 +35,7 @@ export const ObjectState = ({ children }) => {
         };
 
         const objects = await request(
-            API_URL + "/objects/defect/" + id,
+            API_URL + "/defect/" + id,
             "POST",
             values
         );
@@ -52,6 +52,7 @@ export const ObjectState = ({ children }) => {
 
     const getDuble = async () => {
         const objects = await request(API_URL + "/");
+        //console.log("payload duble", objects);
         const payload = dubleObjects(objects);
         //console.log("payload duble", payload);
         dispatch({ type: GET_DUBLE, payload });
