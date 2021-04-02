@@ -15,9 +15,10 @@ code {
 }
 
 .reports {
-    width: 800px;
+    width: 600px;
     height: 500px;
-    border: 1px solid rgba(230, 217, 217, 0.5);
+    /* border: 1px solid rgba(230, 217, 217, 0.5); */
     margin: 50px auto;
-    box-shadow: 0 0 5px rgba(179, 180, 179, 0.5);
+    /* box-shadow: 0 0 5px rgba(179, 180, 179, 0.5); */
+    padding: 50px;
 }
