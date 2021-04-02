@@ -12,12 +12,6 @@ export const AddDefect = () => {
     };
 
     const handleOk = (values) => {
-        //console.log("values", values);
-
-        const dd = values.date;
-        //moment.lang("ru");
-        //console.log("date", dd.format("DD/MM/YYYY"));
-        //console.log("time", dd.format("HH:mm:ss"));
         addDefect(values);
         setIsModalVisible(false);
     };

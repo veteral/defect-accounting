@@ -7,19 +7,16 @@ import { ObjectState } from "./context/object/ObjectState";
 import { CauseState } from "./context/cause/CauseState";
 import { ConfigProvider } from "antd";
 import ruRU from "antd/lib/locale/ru_RU";
-import { DubleState } from "./context/duble/DubleState";
 
 ReactDOM.render(
     <React.StrictMode>
         <ConfigProvider locale={ruRU}>
             <ObjectState>
-                <DubleState>
-                    <CauseState>
-                        <BrowserRouter>
-                            <App />
-                        </BrowserRouter>
-                    </CauseState>
-                </DubleState>
+                <CauseState>
+                    <BrowserRouter>
+                        <App />
+                    </BrowserRouter>
+                </CauseState>
             </ObjectState>
         </ConfigProvider>
     </React.StrictMode>,

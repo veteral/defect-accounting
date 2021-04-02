@@ -1,5 +1,4 @@
 import { useEffect, useContext } from "react";
-import { DubleContext } from "../../context/duble/dubleContext";
 import { ObjectsTable } from "../../components/tables/ObjectsTable";
 import { Preloader } from "../../components/Preloader";
 import { ObjectContext } from "../../context/object/objectContext";
