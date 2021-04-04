@@ -5,11 +5,11 @@ const fs = require("fs");
  * name - наименование файла
  */
 module.exports.getData = (nameFile) => {
-    try {
-        return JSON.parse(fs.readFileSync(nameFile, "utf8"));
-    } catch (e) {
-        console.log(`Не найден файл ${nameFile}`);
-    }
+  try {
+    return JSON.parse(fs.readFileSync(nameFile, "utf8"));
+  } catch (e) {
+    console.log(`Не найден файл ${nameFile}`);
+  }
 };
 
 /**
@@ -18,9 +18,34 @@ module.exports.getData = (nameFile) => {
  * data - записываемые данные
  */
 module.exports.setData = (nameFile, data) => {
-    try {
-        fs.writeFileSync(nameFile, JSON.stringify(data, null, 2), "utf8");
-    } catch (e) {
-        console.log(`Ошибка записи в файл ${nameFile}`);
-    }
+  try {
+    fs.writeFileSync(nameFile, JSON.stringify(data, null, 2), "utf8");
+  } catch (e) {
+    console.log(`Ошибка записи в файл ${nameFile}`);
+  }
 };
+
+// асинхронный метод записи в файл
+module.exports.setDataA = (nameFile, data) => {
+  return new Promise((resolve, reject) => {
+    try {
+      fs.writeFileSync(nameFile, JSON.stringify(data, null, 2), "utf8");
+      console.log("reject")
+      return resolve({ message: "File was created" });
+    } catch (e) {
+        console.log("Error write to file")
+      return reject({ message: "File error" });
+    }
+  });
+};
+
+// асинхронный метод чтения данных из файла
+module.exports.getDataA = (nameFile, data) => {
+    return new Promise((resolve, reject) => {
+      try {        
+        return resolve(JSON.parse(fs.readFileSync(nameFile, "utf8")));
+      } catch (e) {
+        return reject({ message: "File error" });
+      }
+    });
+  };

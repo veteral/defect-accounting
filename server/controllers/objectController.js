@@ -1,6 +1,6 @@
 const config = require("config");
 const moment = require("moment");
-const { getData, setData } = require("./fileController");
+const { getData, setData, setDataA } = require("./fileController");
 const { v4: uuidv4 } = require("uuid");
 
 const path = config.get("pathDB");
@@ -63,7 +63,7 @@ module.exports.deleteObject = (req, res) => {
     }
 };
 
-module.exports.addDefect = (req, res) => {
+module.exports.addDefect = async (req, res) => {
     const { id } = req.params;
     try {
         //console.log(id);
@@ -71,7 +71,7 @@ module.exports.addDefect = (req, res) => {
 
         const object = objects.find((item) => id === item.key);
 
-        console.log("object", object);
+        //console.log("object", object);
 
         const addDefect = { ...req.body, key: uuidv4() };
 
@@ -98,9 +98,10 @@ module.exports.addDefect = (req, res) => {
                 moment(a.date, "DD.MM.YYYY") - moment(b.date, "DD.MM.YYYY")
         );
 
-        setData(DBObjects, objects);
+        await setDataA(DBObjects, objects);
 
         const data = getObjectsWithCause(objects);
+        console.log('send json')
 
         res.status(201).json(data);
     } catch (e) {
