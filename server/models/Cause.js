@@ -1,9 +1,10 @@
-const { model, Schema } = require("mongoose");
+const { model, Schema, ObjectId } = require("mongoose");
 
-const Cause = new Schema({
+const CauseSchema = new Schema({
+    //_id: { type: ObjectId, required: true },
     nameL: { type: String, required: true },
     nameS: { type: String, required: true },
     nameC: { type: String, required: true },
 });
 
-module.exports = model("Cause", Cause);
+module.exports = model("Cause", CauseSchema);
