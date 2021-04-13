@@ -3,7 +3,7 @@ const router = new Router();
 const controller = require("../controllers/objectController");
 
 router.get("/objects", controller.getAllObjects);
-router.post("/object", controller.addObject);
+router.post("/add", controller.addObject);
 router.get("/", controller.getControl);
 // router.get("/", controller.getAllObjects);
 // router.get("/objects", controller.getAllObjects);

@@ -12,26 +12,13 @@ const DBCause = path + "cause.json";
 
 module.exports.addObject = async (req, res) => {
     try {
-        //let object = { ...req.body, key: uuidv4(), defects: [], duble: false }; //уникальный id
+        console.log(req.body);
 
-        let object = new Object({
-            name: "Test5",
-            address: "Address",
-            passwords: "1-1-1-2",
-
-            defects: [
-                {
-                    _id: new mongoose.Types.ObjectId(),
-                    train: "9",
-                    date: "22-01-2021",
-                    time: "05:05:05",
-                    cause: "606b1b4c635f9f0408ea99dc",
-                },
-            ],
-        });
+        let object = new Object({ ...req.body });
 
         await object.save();
-        console.log("End");
+
+        //console.log("End");
 
         res.status(201).json(object);
     } catch (e) {
