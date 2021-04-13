@@ -40,81 +40,25 @@ module.exports.addObject = async (req, res) => {
     }
 };
 
-module.exports.getObjects = async (req, res) => {
+module.exports.getControl = async (req, res) => {
     try {
-        //let object = { ...req.body, key: uuidv4(), defects: [], duble: false }; //уникальный id
-
-        // let object = new Object({
-        //     name: "Test5",
-        //     address: "Address",
-        //     passwords: "1-1-1-2",
-
-        //     defects: [
-        //         {
-        //             _id: new mongoose.Types.ObjectId(),
-        //             train: "9",
-        //             date: "22-01-2021",
-        //             time: "05:05:05",
-        //             cause: "606b1b4c635f9f0408ea99dc",
-        //         },
-        //     ],
-        // });
-
-        // await object.save();
-        //files = await Defect.find({_id: "606da17a6185fc0d58ad8553"}).sort({name:1})
-        // Defect.findOne({ _id: "606da17a6185fc0d58ad8553" })
-        //     .populate("Object")
-        //     .exec(function (err, story) {
-        //         if (err) return console.log(err);
-        //         console.log("The author is %s", story.Object);
-        //         // prints "The author is Ian Fleming"
-        //     });
-
-        // const db = await Object.aggregate([
-        //     {
-        //         $lookup: {
-        //             from: "defects",
-        //             localField: "_id",
-        //             foreignField: "objectId",
-        //             as: "defects",
-        //         },
-        //     },
-        // ]);
-
-        //const objects = await Object.find({});
-        const defect = await Defect.find({});
-
-        // for (let i = 0; i < 10; ++i) {
-        //     const orders = await Object.aggregate([
-        //         { $match: { completed: true } },
-        //         {
-        //             $lookup: {
-        //                 from: "defects",
-        //                 localField: "_id",
-        //                 foreignField: "objectId",
-        //                 as: "defects",
-        //             },
-        //         },
-        //     ]);
-        //const orders = await Defect.find({}).populate("objects");
-        //times.push(Date.now() - startTime);
-        //}
-
-        //console.log("End", db);
-
-        res.status(201).json(defect);
+        const control = await Object.find({ control: true });
+        res.status(201).json(control);
     } catch (e) {
         console.log(`произошла ошибка - ${e}`);
         res.status(500);
     }
 };
 
-// // module.exports.getAllObjects = (req, res) => {
-// //     const objects = getData(DBObjects);
-// //     const data = getObjectsWithCause(objects);
-// //     //console.log(data);
-// //     res.json(data);
-// // };
+module.exports.getAllObjects = async (req, res) => {
+    try {
+        const objects = await Object.find({});
+        res.status(201).json(objects);
+    } catch (e) {
+        console.log(`произошла ошибка - ${e}`);
+        res.status(500);
+    }
+};
 
 // // module.exports.getOneObject = (req, res) => {
 // //     const data = getData(DB);
@@ -244,3 +188,63 @@ module.exports.getObjects = async (req, res) => {
 
 //     return data;
 // }
+
+//let object = { ...req.body, key: uuidv4(), defects: [], duble: false }; //уникальный id
+
+// let object = new Object({
+//     name: "Test5",
+//     address: "Address",
+//     passwords: "1-1-1-2",
+
+//     defects: [
+//         {
+//             _id: new mongoose.Types.ObjectId(),
+//             train: "9",
+//             date: "22-01-2021",
+//             time: "05:05:05",
+//             cause: "606b1b4c635f9f0408ea99dc",
+//         },
+//     ],
+// });
+
+// await object.save();
+//files = await Defect.find({_id: "606da17a6185fc0d58ad8553"}).sort({name:1})
+// Defect.findOne({ _id: "606da17a6185fc0d58ad8553" })
+//     .populate("Object")
+//     .exec(function (err, story) {
+//         if (err) return console.log(err);
+//         console.log("The author is %s", story.Object);
+//         // prints "The author is Ian Fleming"
+//     });
+
+// const data = await Object.aggregate([
+//     // { $limit: 100 },
+//     {
+//         $lookup: {
+//             from: "defects",
+//             //localField: "_id",
+//             //foreignField: "objectId",
+//             as: "defects",
+//             pipeline: [{ $limit: 1 }],
+//         },
+//     },
+// ]);
+
+//const objects = await Object.find({});
+//const defect = await Defect.find({});
+
+// for (let i = 0; i < 10; ++i) {
+//     const orders = await Object.aggregate([
+//         { $match: { completed: true } },
+//         {
+//             $lookup: {
+//                 from: "defects",
+//                 localField: "_id",
+//                 foreignField: "objectId",
+//                 as: "defects",
+//             },
+//         },
+//     ]);
+//const orders = await Defect.find({}).populate("objects");
+//times.push(Date.now() - startTime);
+//}

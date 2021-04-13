@@ -5,8 +5,8 @@ const ObjectSchema = new Schema({
     name: { type: String, required: true },
     address: { type: String, required: true },
     passwords: { type: String, required: true },
-    telefone: { type: String, default: "" },
-    device: { type: String, default: "" },
+    telefone: { type: String },
+    device: { type: String },
     control: { type: Boolean, default: false },
 });
 

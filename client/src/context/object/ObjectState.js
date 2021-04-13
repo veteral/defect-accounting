@@ -51,11 +51,12 @@ export const ObjectState = ({ children }) => {
     };
 
     const getDuble = async () => {
+        console.log("Start request");
         const objects = await request(API_URL + "/");
         //console.log("payload duble", objects);
-        const payload = dubleObjects(objects);
-        //console.log("payload duble", payload);
-        dispatch({ type: GET_DUBLE, payload });
+        //const payload = dubleObjects(objects);
+        console.log("payload duble", objects);
+        //dispatch({ type: GET_DUBLE, payload });
     };
 
     function dubleObjects(objects) {

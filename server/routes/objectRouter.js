@@ -2,8 +2,9 @@ const Router = require("express");
 const router = new Router();
 const controller = require("../controllers/objectController");
 
+router.get("/objects", controller.getAllObjects);
 router.post("/object", controller.addObject);
-router.get("/", controller.getObjects);
+router.get("/", controller.getControl);
 // router.get("/", controller.getAllObjects);
 // router.get("/objects", controller.getAllObjects);
 // router.get("/objects/:id", controller.getOneObject);
