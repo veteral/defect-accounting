@@ -3,26 +3,27 @@ import { ObjectContext } from "./objectContext";
 import { objectReducer } from "./objectReducer";
 import { API_URL } from "../../config";
 import { request } from "../request";
-import { GET_OBJECTS, ADD_DEFECT, GET_DUBLE } from "../actionsType";
+import { GET_OBJECTS, ADD_OBJECT, ADD_DEFECT, GET_DUBLE } from "../actionsType";
 
 export const ObjectState = ({ children }) => {
     const initialState = {
         objects: [],
-        duble: [],
+        controls: [],
     };
 
     const [state, dispatch] = useReducer(objectReducer, initialState);
 
     const getAllObjects = async () => {
         const payload = await request(API_URL + "/objects");
-        //console.log("payload", payload);
+        console.log("payload", payload);
         //console.log("payload objects", payload);
         dispatch({ type: GET_OBJECTS, payload });
     };
 
-    const setObject = async (values) => {
-        const payload = await request(API_URL + "/objects", "POST", values);
-        dispatch({ type: GET_OBJECTS, payload });
+    const addObject = async (values) => {
+        const payload = await request(API_URL + "/add", "POST", values);
+        //console.log(payload);
+        dispatch({ type: ADD_OBJECT, payload });
     };
 
     const addDefect = async (values) => {
@@ -65,7 +66,7 @@ export const ObjectState = ({ children }) => {
 
     return (
         <ObjectContext.Provider
-            value={{ state, getAllObjects, setObject, addDefect, getDuble }}
+            value={{ state, getAllObjects, addObject, addDefect, getDuble }}
         >
             {children}
         </ObjectContext.Provider>

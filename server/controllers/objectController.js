@@ -39,13 +39,62 @@ module.exports.getControl = async (req, res) => {
 
 module.exports.getAllObjects = async (req, res) => {
     try {
-        const objects = await Object.find({});
+        const objects = await Object.find({}).sort({ passwords: 1 });
         res.status(201).json(objects);
     } catch (e) {
         console.log(`произошла ошибка - ${e}`);
         res.status(500);
     }
 };
+
+// // module.exports.addDefect = async (req, res) => {
+// //     const { id } = req.params;
+// //     try {
+// //         //console.log(id);
+// //         const objects = getData(DBObjects);
+
+// //         const object = objects.find((item) => id === item.key);
+
+// //         //console.log("object", object);
+
+// //         const addDefect = { ...req.body, key: uuidv4() };
+
+// //         // выявляем повтор срабатывания:
+// //         // срабатывание одного шлейфа 3 раза и более за 30 дней
+// //         const defectsIn30days = object.defects
+// //             .filter((i) => i.train === addDefect.train)
+// //             .filter((i) => {
+// //                 const days = moment(addDefect.date, "DD-MM-YYYY").diff(
+// //                     moment(i.date, "DD-MM-YYYY"),
+// //                     "days"
+// //                 );
+// //                 if (days >= 0 && days < 30) return i;
+// //             });
+
+// //         //console.log("defectsIn30days", defectsIn30days);
+// //         if (defectsIn30days.length >= 2) object.duble = true;
+
+// //         object.defects.push(addDefect);
+
+// //         // сортируем срабатывания по дате
+// //         object.defects.sort(
+// //             (a, b) =>
+// //                 moment(a.date, "DD.MM.YYYY") - moment(b.date, "DD.MM.YYYY")
+// //         );
+
+// //         await setDataA(DBObjects, objects);
+
+// //         const data = getObjectsWithCause(objects);
+// //         console.log("send json");
+
+// //         res.status(201).json(data);
+// //     } catch (e) {
+// //         console.log(
+// //             `При добавлении срабатывания, в объект с id - ${id}, произошла ошибка - ${e}`
+// //         );
+// //         res.status(500);
+// //     }
+// // };
 
 // // module.exports.getOneObject = (req, res) => {
 // //     const data = getData(DB);
