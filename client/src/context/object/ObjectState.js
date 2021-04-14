@@ -27,28 +27,24 @@ export const ObjectState = ({ children }) => {
     };
 
     const addDefect = async (values) => {
-        const id = values.object;
+        //const id = values.object;
 
-        values = {
-            ...values,
-            date: values.date.format("DD.MM.YYYY"),
-            time: values.time.format("HH:mm:ss"),
-        };
+        // values = {
+        //     ...values,
+        //     date: values.date.format("DD-MM-YYYY"),
+        //     time: values.time.format("HH:mm:ss"),
+        // };
 
-        const objects = await request(
-            API_URL + "/defect/" + id,
-            "POST",
-            values
-        );
+        const payload = await request(API_URL + "/defect/add", "POST", values);
 
-        const duble = dubleObjects(objects);
+        //const duble = dubleObjects(objects);
 
-        const payload = {
-            objects: [...objects],
-            duble: [...duble],
-        };
-        console.log("values posle", values);
-        dispatch({ type: ADD_DEFECT, payload });
+        // const payload = {
+        //     objects: [...objects],
+        //     duble: [...duble],
+        // };
+        console.log("values posle", payload);
+        //dispatch({ type: ADD_DEFECT, payload });
     };
 
     const getDuble = async () => {
@@ -60,9 +56,9 @@ export const ObjectState = ({ children }) => {
         //dispatch({ type: GET_DUBLE, payload });
     };
 
-    function dubleObjects(objects) {
-        return objects.filter((el) => el.duble === true);
-    }
+    // function dubleObjects(objects) {
+    //     return objects.filter((el) => el.duble === true);
+    // }
 
     return (
         <ObjectContext.Provider

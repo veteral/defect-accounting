@@ -28,7 +28,7 @@ export const AddDefectForm = ({ form }) => {
         <Form form={form} {...layout} name="basic" fields={[]}>
             <Form.Item
                 label="Объект"
-                name="object"
+                name="objectId"
                 rules={[
                     {
                         required: true,
@@ -46,7 +46,7 @@ export const AddDefectForm = ({ form }) => {
                     }
                 >
                     {state.objects.map((el) => (
-                        <Option key={el.key} value={el.key}>
+                        <Option key={el._id} value={el._id}>
                             {`${el.passwords} : ${el.name} : ${el.address}`}
                         </Option>
                     ))}
@@ -82,7 +82,7 @@ export const AddDefectForm = ({ form }) => {
             </Form.Item>
             <Form.Item
                 label="Срабатывание"
-                name="cause"
+                name="causeId"
                 rules={[
                     {
                         required: true,
@@ -100,8 +100,8 @@ export const AddDefectForm = ({ form }) => {
                     }
                 >
                     {cause.map((el) => (
-                        <Option key={el.key} value={el.key}>
-                            {el.Name_L}
+                        <Option key={el._id} value={el._id}>
+                            {el.nameL}
                         </Option>
                     ))}
                 </Select>

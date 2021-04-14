@@ -10,11 +10,11 @@ export const objectReducer = (state, action) => {
             console.log("ADD_OBJECT", action.payload);
             return { ...state, objects: [...state.objects, action.payload] };
 
-        case ADD_DEFECT:
-            return {
-                objects: [...action.payload.objects],
-                controls: [...action.payload.duble],
-            };
+        // case ADD_DEFECT:
+        //     return {
+        //         objects: [...action.payload.objects],
+        //         controls: [...action.payload.duble],
+        //     };
 
         case GET_DUBLE:
             return {
