@@ -48,48 +48,13 @@ module.exports.getAllObjects = async (req, res) => {
 };
 
 module.exports.addDefect = async (req, res) => {
-    //const { id } = req.params;
     try {
         console.log(req.body);
 
         let addDefect = new Defect({ ...req.body });
 
         await addDefect.save();
-        //console.log(id);
-        // const objects = getData(DBObjects);
 
-        // const object = objects.find((item) => id === item.key);
-
-        // //console.log("object", object);
-
-        // const addDefect = { ...req.body, key: uuidv4() };
-
-        // // выявляем повтор срабатывания:
-        // // срабатывание одного шлейфа 3 раза и более за 30 дней
-        // const defectsIn30days = object.defects
-        //     .filter((i) => i.train === addDefect.train)
-        //     .filter((i) => {
-        //         const days = moment(addDefect.date, "DD-MM-YYYY").diff(
-        //             moment(i.date, "DD-MM-YYYY"),
-        //             "days"
-        //         );
-        //         if (days >= 0 && days < 30) return i;
-        //     });
-
-        // //console.log("defectsIn30days", defectsIn30days);
-        // if (defectsIn30days.length >= 2) object.duble = true;
-
-        // object.defects.push(addDefect);
-
-        // // сортируем срабатывания по дате
-        // object.defects.sort(
-        //     (a, b) =>
-        //         moment(a.date, "DD.MM.YYYY") - moment(b.date, "DD.MM.YYYY")
-        // );
-
-        // await setDataA(DBObjects, objects);
-
-        // const data = getObjectsWithCause(objects);
         console.log("send json");
 
         res.status(201).json(addDefect);
@@ -99,6 +64,42 @@ module.exports.addDefect = async (req, res) => {
         );
         res.status(500);
     }
+};
+
+module.exports.getDefects = async (req, res) => {
+    const { id } = req.query;
+
+    console.log("objectId", id);
+
+    const defects = await Defect.aggregate([
+        {
+            $match: { objectId: mongoose.Types.ObjectId(id) }, //фильтруем сработки по id объекта
+        },
+        //объединяем коллекции срабатываний и видов срабатываний
+        {
+            $lookup: {
+                from: "causes",
+                localField: "causeId",
+                foreignField: "_id",
+                as: "cs",
+            },
+        },
+        //разворачиваем массив
+        { $unwind: "$cs" },
+        //формируем новый вывод
+        {
+            $project: {
+                _id: 1,
+                train: 1,
+                date: 1,
+                time: 1,
+                cause: "$cs.nameL",
+            },
+        },
+    ]);
+
+    //console.log("defects", defects);
+    res.status(201).json(defects);
 };
 
 // // module.exports.getOneObject = (req, res) => {

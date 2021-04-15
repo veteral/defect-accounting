@@ -3,12 +3,18 @@ import { ObjectContext } from "./objectContext";
 import { objectReducer } from "./objectReducer";
 import { API_URL } from "../../config";
 import { request } from "../request";
-import { GET_OBJECTS, ADD_OBJECT, ADD_DEFECT, GET_DUBLE } from "../actionsType";
+import {
+    GET_OBJECTS,
+    ADD_OBJECT,
+    GET_DEFECTS,
+    GET_DUBLE,
+} from "../actionsType";
 
 export const ObjectState = ({ children }) => {
     const initialState = {
         objects: [],
         controls: [],
+        defects: [],
     };
 
     const [state, dispatch] = useReducer(objectReducer, initialState);
@@ -35,7 +41,7 @@ export const ObjectState = ({ children }) => {
         //     time: values.time.format("HH:mm:ss"),
         // };
 
-        const payload = await request(API_URL + "/defect/add", "POST", values);
+        const payload = await request(API_URL + "/defects/add", "POST", values);
 
         //const duble = dubleObjects(objects);
 
@@ -43,8 +49,16 @@ export const ObjectState = ({ children }) => {
         //     objects: [...objects],
         //     duble: [...duble],
         // };
-        console.log("values posle", payload);
+        //console.log("values posle", payload);
         //dispatch({ type: ADD_DEFECT, payload });
+    };
+
+    const getDefects = async (objectId) => {
+        console.log("get defects - id", objectId);
+        const payload = await request(API_URL + "/defects?id=" + objectId);
+        console.log("get defects", payload);
+        //console.log("payload objects", payload);
+        dispatch({ type: GET_DEFECTS, payload });
     };
 
     const getDuble = async () => {
@@ -62,7 +76,14 @@ export const ObjectState = ({ children }) => {
 
     return (
         <ObjectContext.Provider
-            value={{ state, getAllObjects, addObject, addDefect, getDuble }}
+            value={{
+                state,
+                getAllObjects,
+                addObject,
+                addDefect,
+                getDuble,
+                getDefects,
+            }}
         >
             {children}
         </ObjectContext.Provider>

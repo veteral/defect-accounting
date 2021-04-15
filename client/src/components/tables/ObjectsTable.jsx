@@ -58,7 +58,7 @@ export const ObjectsTable = ({ data }) => {
                 columns={columns}
                 expandable={{
                     expandedRowRender: (record) => (
-                        <DefectsTable data={record._id} />
+                        <DefectsTable objectId={record._id} />
                     ),
                     //rowExpandable: (record) => record.defects.length > 0,
                 }}

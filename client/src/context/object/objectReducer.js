@@ -1,4 +1,9 @@
-import { GET_OBJECTS, ADD_OBJECT, ADD_DEFECT, GET_DUBLE } from "../actionsType";
+import {
+    GET_OBJECTS,
+    ADD_OBJECT,
+    GET_DEFECTS,
+    GET_DUBLE,
+} from "../actionsType";
 
 export const objectReducer = (state, action) => {
     switch (action.type) {
@@ -10,11 +15,12 @@ export const objectReducer = (state, action) => {
             console.log("ADD_OBJECT", action.payload);
             return { ...state, objects: [...state.objects, action.payload] };
 
-        // case ADD_DEFECT:
-        //     return {
-        //         objects: [...action.payload.objects],
-        //         controls: [...action.payload.duble],
-        //     };
+        case GET_DEFECTS:
+            console.log("GET_DEFECTS", action.payload);
+            return {
+                ...state,
+                defects: [...action.payload],
+            };
 
         case GET_DUBLE:
             return {

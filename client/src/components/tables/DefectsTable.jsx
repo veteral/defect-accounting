@@ -1,7 +1,10 @@
 import { Table } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
+import { useContext, useEffect } from "react";
+import { ObjectContext } from "../../context/object/objectContext";
 
-export const DefectsTable = ({ data }) => {
+export const DefectsTable = ({ objectId }) => {
+    const { state, getDefects } = useContext(ObjectContext);
     const columns = [
         { title: "шлейф", dataIndex: "train", key: "train" },
         { title: "дата", dataIndex: "date", key: "date" },
@@ -15,9 +18,19 @@ export const DefectsTable = ({ data }) => {
         },
     ];
 
+    //const defects = [];
+    useEffect(() => {
+        getDefects(objectId);
+    }, []);
+
     return (
         <>
-            <Table dataSource={data} columns={columns} pagination={false} />
+            <Table
+                rowKey="_id"
+                dataSource={state.defects}
+                columns={columns}
+                pagination={false}
+            />
         </>
     );
 };
