@@ -1,4 +1,13 @@
-import { Form, Input, Button, DatePicker, TimePicker } from "antd";
+import {
+    Form,
+    Input,
+    Button,
+    DatePicker,
+    TimePicker,
+    Radio,
+    Select,
+} from "antd";
+
 const layout = {
     labelCol: {
         span: 8,
@@ -19,6 +28,9 @@ const tailLayout1 = {
         span: 16,
     },
 };
+
+const { Option } = Select;
+
 export const ControlReport = () => {
     const onFinish = (values) => {
         console.log("Success:", values);
@@ -30,7 +42,7 @@ export const ControlReport = () => {
 
     return (
         <div className="reports">
-            <h1>Контроль за сработавшими объектами за период:</h1>
+            <h1>Отчет о сработавших объектах за период:</h1>
             <Form
                 // {...layout}
                 name="basic"
@@ -55,6 +67,34 @@ export const ControlReport = () => {
                     >
                         <DatePicker />
                     </Form.Item>
+                </Form.Item>
+
+                <Form.Item
+                    name="time"
+                    rules={[{ required: true, message: "Выберите время!" }]}
+                    style={{ display: "inline-block" }}
+                >
+                    <Select
+                        defaultValue="lucy"
+                        style={{ width: 120 }}
+                        //onChange={handleChange}
+                    >
+                        <Option value="jack">Jack</Option>
+                        <Option value="lucy">Lucy</Option>
+                        <Option value="disabled" disabled>
+                            Disabled
+                        </Option>
+                        <Option value="Yiminghe">yiminghe</Option>
+                    </Select>
+                </Form.Item>
+
+                <Form.Item name="radio-group" label="период срабатывания:">
+                    <Radio.Group>
+                        <Radio value="a">2 месяца</Radio>
+                        <Radio value="b">6 месяцев</Radio>
+                        <Radio value="c">год</Radio>
+                        <Radio value="d">все</Radio>
+                    </Radio.Group>
                 </Form.Item>
 
                 <Form.Item {...tailLayout1} style={{ marginBottom: 0 }}>
