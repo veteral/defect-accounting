@@ -11,98 +11,104 @@ const mongoose = require("mongoose");
 //const DBCause = path + "cause.json";
 
 module.exports.addObject = async (req, res) => {
-    try {
-        console.log(req.body);
+  try {
+    console.log(req.body);
 
-        let object = new Object({ ...req.body });
+    let object = new Object({ ...req.body });
 
-        await object.save();
+    await object.save();
 
-        //console.log("End");
+    //console.log("End");
 
-        res.status(201).json(object);
-    } catch (e) {
-        console.log(`При добавлении объекта произошла ошибка - ${e}`);
-        res.status(500);
-    }
+    res.status(201).json(object);
+  } catch (e) {
+    console.log(`При добавлении объекта произошла ошибка - ${e}`);
+    res.status(500);
+  }
 };
 
 module.exports.getControl = async (req, res) => {
-    try {
-        const control = await Object.find({ control: true });
-        res.status(201).json(control);
-    } catch (e) {
-        console.log(`произошла ошибка - ${e}`);
-        res.status(500);
-    }
+  try {
+    const control = await Object.find({ control: true });
+    res.status(201).json(control);
+  } catch (e) {
+    console.log(`произошла ошибка - ${e}`);
+    res.status(500);
+  }
 };
 
 module.exports.getAllObjects = async (req, res) => {
-    try {
-        const objects = await Object.find({}).sort({ passwords: 1 });
-        res.status(201).json(objects);
-    } catch (e) {
-        console.log(`произошла ошибка - ${e}`);
-        res.status(500);
-    }
+  try {
+    const objects = await Object.find({}).sort({ passwords: 1 });
+    res.status(201).json(objects);
+  } catch (e) {
+    console.log(`произошла ошибка - ${e}`);
+    res.status(500);
+  }
 };
 
 module.exports.addDefect = async (req, res) => {
-    try {
-        const { date, time } = req.body;
+  try {
+    const { date, time } = req.body;
 
-        var string = moment(date).format("DD-MM-YYYY");
-        console.log(string);
-        let addDefect = new Defect({ ...req.body });
+    const timeStr = moment(time).format("HH:mm");
+    const dateIso = moment().toISOString(date);
 
-        //await addDefect.save();
+    console.log(date);
 
-        //console.log("send json");
+    let addDefect = new Defect({
+      ...req.body,
+      time: timeStr,      
+    });
 
-        res.status(201).json(addDefect);
-    } catch (e) {
-        console.log(
-            `При добавлении срабатывания, в объект с id - ${id}, произошла ошибка - ${e}`
-        );
-        res.status(500);
-    }
+    await addDefect.save();
+
+    //console.log("send json");
+
+    res.status(201).json(addDefect);
+  } catch (e) {
+    console.log(
+      `При добавлении срабатывания, в объект с id - ${id}, произошла ошибка - ${e}`
+    );
+    res.status(500);
+  }
 };
 
 module.exports.getDefects = async (req, res) => {
-    const { id } = req.query;
+  const { id } = req.query;
 
-    console.log("objectId", id);
+  console.log("objectId", id);
 
-    const defects = await Defect.aggregate([
-        //фильтруем сработки по id объекта
-        {
-            $match: { objectId: mongoose.Types.ObjectId(id) },
+  const defects = await Defect.aggregate([
+    //фильтруем сработки по id объекта
+    {
+      $match: { objectId: mongoose.Types.ObjectId(id) },
+    },
+    //объединяем коллекции срабатываний и видов срабатываний
+    {
+      $lookup: {
+        from: "causes",
+        localField: "causeId",
+        foreignField: "_id",
+        as: "cs",
+      },
+    },
+    //разворачиваем массив
+    { $unwind: "$cs" },
+    //формируем новый вывод
+    {
+      $project: {
+        _id: 1,
+        train: 1,
+        yearMonthDayUTC: {
+          $dateToString: { format: "%d-%m-%Y", date: "$date" },
         },
-        //объединяем коллекции срабатываний и видов срабатываний
-        {
-            $lookup: {
-                from: "causes",
-                localField: "causeId",
-                foreignField: "_id",
-                as: "cs",
-            },
-        },
-        //разворачиваем массив
-        { $unwind: "$cs" },
-        //формируем новый вывод
-        {
-            $project: {
-                _id: 1,
-                train: 1,
-                yearMonthDayUTC: {
-                    $dateToString: { format: "%d-%m-%Y", date: "$date" },
-                },
-                time: 1,
-                cause: "$cs.nameL",
-            },
-        },
-    ]);
+        time: 1,
+        cause: "$cs.nameL",
+      },
+    },
+  ]);
 
-    //console.log("defects", defects);
-    res.status(201).json(defects);
+  //console.log("defects", defects);
+  res.status(201).json(defects);
 };

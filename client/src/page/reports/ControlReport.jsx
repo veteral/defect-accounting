@@ -51,7 +51,7 @@ export const ControlReport = () => {
             >
                 <Form.Item {...tailLayout}>
                     <Form.Item
-                        name="date"
+                        name="dateStart"
                         rules={[{ required: true, message: "Выберите дату!" }]}
                         style={{
                             display: "inline-block",
@@ -61,7 +61,7 @@ export const ControlReport = () => {
                         <DatePicker />
                     </Form.Item>
                     <Form.Item
-                        name="time"
+                        name="dateEnd"
                         rules={[{ required: true, message: "Выберите время!" }]}
                         style={{ display: "inline-block" }}
                     >

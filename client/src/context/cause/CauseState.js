@@ -9,7 +9,8 @@ export const CauseState = ({ children }) => {
     const [state, dispatch] = useReducer(causeReducer, []);
 
     const getCause = async () => {
-        const payload = await request(API_URL + "/cause");
+        const payload = await request(API_URL + "/causes");
+        console.log("cause", payload)
         dispatch({ type: GET_CAUSE, payload });
     };
 

@@ -6,7 +6,7 @@ const reportsRouter = require("./reportsRouter");
 
 //router.use("/", dubleRouter);
 router.use("/", objectRouter);
-router.use("/cause", causeRouter);
+router.use("/causes", causeRouter);
 router.use("/reports", reportsRouter);
 
 module.exports = router;

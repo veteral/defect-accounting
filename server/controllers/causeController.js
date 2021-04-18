@@ -2,10 +2,11 @@ const { getData, setData } = require("./fileController");
 const Cause = require("../models/Cause");
 const config = require("config");
 
-module.exports.getCause = async (req, res) => {
+module.exports.getCauses = async (req, res) => {
     try {
-        const cause = await Cause.find({});
-        res.json(cause);
+        const causes = await Cause.find({});
+        console.log(causes)
+        res.json(causes);
     } catch (e) {
         res.status(500).json({
             message: "Что-то пошло не так, попробуйте снова",
