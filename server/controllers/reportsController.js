@@ -11,64 +11,52 @@ const mongoose = require("mongoose");
 //const DBCause = path + "cause.json";
 
 module.exports.getAllDefects = async (req, res) => {
-  //const { id } = req.query;
+    const reports = await Defect.aggregate([
+        {
+            $match: {
+                date: {
+                    $gte: new Date("2020-01-05"),
+                    $lte: new Date("2021-04-17"),
+                },
+            },
+        },
+        {
+            $lookup: {
+                from: "causes",
+                localField: "causeId",
+                foreignField: "_id",
+                as: "cs",
+            },
+        },
+        { $unwind: "$cs" },
+        {
+            $project: {
+                _id: 0,
+                objectId: 1,
+                defects: {
+                    train: "$train",
+                    date: "$date",
+                    time: "$time",
+                    cs: "$cs.nameL",
+                },
+            },
+        },
+        {
+            $group: {
+                _id: "$objectId",
+                defects: { $push: "$defects" },
+            },
+        },
+        {
+            $lookup: {
+                from: "objects",
+                localField: "_id",
+                foreignField: "_id",
+                as: "ob",
+            },
+        },
+        { $unwind: "$ob" },
+    ]);
 
-  //console.log("objectId", id);
-
-  // const def = await Defect
-  //     .find(
-  //         {date:
-  //             {
-  //                 $gte: new Date("2021-03-17T06:04:57.972+00:00"),
-  //                 $lte: new Date("2021-04-17T06:04:57.972+00:00")
-  //             }
-  //         }
-  //         ).populate("Object");
-  //         console.log(def)
-
-  // const def = await Defect.aggregate([
-  //   {
-  //     $match: {
-  //       date:
-  //             {
-  //                 $gte: new Date("2021-04-05T06:04:57.972+00:00"),
-  //                 $lte: new Date("2021-04-17T06:04:57.972+00:00")
-  //             }
-  //     },
-  //     $group: {
-  //       _id: "$objectId"
-  //     }
-  //   }
-  // ]);
-
-
-  const def = await Defect.aggregate([
-    {$match: {
-            date:
-                  {
-                      $gte: new Date("2021-04-05T06:04:57.972+00:00"),
-                      $lte: new Date("2021-04-17T06:04:57.972+00:00")
-                  }
-          }},
-    {$project: {_id: 0, objectId: 1, defects: {train: "$train", date: "$date", time: "$time" }}},
-    {$group: {_id: "$objectId", defects: {$push: "$defects"}}}
-])
-  
-
-  // const defects = await Object.aggregate([
-  //     // {$unwind: JSON.stringify(def)},
-  //     {
-  //         $lookup: {
-  //           from: JSON.stringify(def),
-  //           localField: "_id",
-  //           foreignField: "objectId",
-  //           as: "d",
-  //         },
-  //       },
-  // ])
-
-  //const defects = await Defect.find({date: {$gte: "2021-03-17T06:04:57.972+00:00", $lte: "2021-05-17T06:04:57.972+00:00"}});
-
-  //console.log("defects", defects);
-  res.status(201).json(def);
+    res.status(201).json(reports);
 };
