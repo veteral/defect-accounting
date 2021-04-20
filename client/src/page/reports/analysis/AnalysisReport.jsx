@@ -1,3 +1,4 @@
+import { useHistory } from "react-router-dom";
 import {
     Form,
     Input,
@@ -31,9 +32,15 @@ const tailLayout1 = {
 
 const { Option } = Select;
 
-export const ControlReport = () => {
+export const AnalysisReport = () => {
+    const history = useHistory();
     const onFinish = (values) => {
         console.log("Success:", values);
+        const location = {
+            pathname: "/reports/analysis/print",
+            state: {},
+        };
+        history.push(location);
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -69,7 +76,7 @@ export const ControlReport = () => {
                     </Form.Item>
                 </Form.Item>
 
-                <Form.Item
+                {/* <Form.Item
                     name="time"
                     rules={[{ required: true, message: "Выберите время!" }]}
                     style={{ display: "inline-block" }}
@@ -86,7 +93,7 @@ export const ControlReport = () => {
                         </Option>
                         <Option value="Yiminghe">yiminghe</Option>
                     </Select>
-                </Form.Item>
+                </Form.Item> */}
 
                 <Form.Item name="radio-group" label="период срабатывания:">
                     <Radio.Group>

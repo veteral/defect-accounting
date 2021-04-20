@@ -6,9 +6,54 @@ const Object = require("../models/Object");
 const Defect = require("../models/Defect");
 const mongoose = require("mongoose");
 
-//const path = config.get("pathDB");
-//const DBObjects = path + "objects.json";
-//const DBCause = path + "cause.json";
+module.exports.getLog = async (req, res) => {
+    const { start, end } = req.params;
+
+    console.log(new Date(start));
+
+    const log = await Defect.aggregate([
+        {
+            $match: {
+                date: {
+                    $gte: new Date(start),
+                    $lte: new Date(end),
+                },
+            },
+        },
+        {
+            $lookup: {
+                from: "causes",
+                localField: "causeId",
+                foreignField: "_id",
+                as: "cs",
+            },
+        },
+        { $unwind: "$cs" },
+        {
+            $lookup: {
+                from: "objects",
+                localField: "objectId",
+                foreignField: "_id",
+                as: "obj",
+            },
+        },
+        { $unwind: "$obj" },
+        {
+            $project: {
+                _id: 1,
+                name: "$obj.name",
+                passwords: "obj.passwords",
+                address: "$obj.address",
+                train: 1,
+                date: 1,
+                time: 1,
+                cs: "$cs.nameL",
+            },
+        },
+    ]);
+
+    res.status(201).json(log);
+};
 
 module.exports.getAllDefects = async (req, res) => {
     const reports = await Defect.aggregate([
