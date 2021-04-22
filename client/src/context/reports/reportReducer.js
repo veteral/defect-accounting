@@ -7,6 +7,7 @@ export const reportReducer = (state, action) => {
             return { log: [...action.payload] };
         case GET_ANALYSIS:
             console.log("GET_ANALYSIS");
+            return { analysis: [...action.payload] };
         default:
             return state;
     }

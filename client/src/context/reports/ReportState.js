@@ -3,7 +3,7 @@ import { reportReducer } from "./reportReducer";
 import { ReportContext } from "./reportContext";
 import { request } from "../request";
 import { API_URL } from "../../config";
-import { GET_LOG } from "../actionsType";
+import { GET_LOG, GET_ANALYSIS } from "../actionsType";
 
 export const ReportState = ({ children }) => {
     const initialState = {
@@ -19,11 +19,19 @@ export const ReportState = ({ children }) => {
         const payload = await request(
             `${API_URL}/reports/log/${startDate}/${endDate}`
         );
-        console.log("log", payload);
+        console.log("log state", payload);
         dispatch({ type: GET_LOG, payload });
     };
 
-    const printAnalysis = async () => {};
+    const printAnalysis = async (values) => {
+        const { startDate, endDate, period } = values;
+        //console.log("dateS", startDate);
+        const payload = await request(
+            `${API_URL}/reports/analysis/${startDate}/${endDate}/${period}`
+        );
+        console.log("Analysis state", payload);
+        dispatch({ type: GET_ANALYSIS, payload });
+    };
 
     return (
         <ReportContext.Provider value={{ state, printLog, printAnalysis }}>

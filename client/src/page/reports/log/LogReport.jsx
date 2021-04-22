@@ -37,7 +37,7 @@ export const LogReport = () => {
 
         const location = {
             pathname: "/reports/log/print",
-            state: { startDate, endDate },
+            state: {},
         };
 
         history.push(location);

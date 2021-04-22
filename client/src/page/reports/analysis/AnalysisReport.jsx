@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import { useHistory } from "react-router-dom";
+import { ReportContext } from "../../../context/reports/reportContext";
 import {
     Form,
     Input,
@@ -34,8 +36,13 @@ const { Option } = Select;
 
 export const AnalysisReport = () => {
     const history = useHistory();
+    const { printAnalysis } = useContext(ReportContext);
+
     const onFinish = (values) => {
         console.log("Success:", values);
+
+        printAnalysis(values);
+
         const location = {
             pathname: "/reports/analysis/print",
             state: {},
@@ -58,7 +65,7 @@ export const AnalysisReport = () => {
             >
                 <Form.Item {...tailLayout}>
                     <Form.Item
-                        name="dateStart"
+                        name="startDate"
                         rules={[{ required: true, message: "Выберите дату!" }]}
                         style={{
                             display: "inline-block",
@@ -68,7 +75,7 @@ export const AnalysisReport = () => {
                         <DatePicker />
                     </Form.Item>
                     <Form.Item
-                        name="dateEnd"
+                        name="endDate"
                         rules={[{ required: true, message: "Выберите время!" }]}
                         style={{ display: "inline-block" }}
                     >
@@ -76,31 +83,12 @@ export const AnalysisReport = () => {
                     </Form.Item>
                 </Form.Item>
 
-                {/* <Form.Item
-                    name="time"
-                    rules={[{ required: true, message: "Выберите время!" }]}
-                    style={{ display: "inline-block" }}
-                >
-                    <Select
-                        defaultValue="lucy"
-                        style={{ width: 120 }}
-                        //onChange={handleChange}
-                    >
-                        <Option value="jack">Jack</Option>
-                        <Option value="lucy">Lucy</Option>
-                        <Option value="disabled" disabled>
-                            Disabled
-                        </Option>
-                        <Option value="Yiminghe">yiminghe</Option>
-                    </Select>
-                </Form.Item> */}
-
-                <Form.Item name="radio-group" label="период срабатывания:">
+                <Form.Item name="period" label="период срабатывания:">
                     <Radio.Group>
-                        <Radio value="a">2 месяца</Radio>
-                        <Radio value="b">6 месяцев</Radio>
-                        <Radio value="c">год</Radio>
-                        <Radio value="d">все</Radio>
+                        <Radio value="1">2 месяца</Radio>
+                        <Radio value="2">6 месяцев</Radio>
+                        <Radio value="3">год</Radio>
+                        <Radio value="4">все</Radio>
                     </Radio.Group>
                 </Form.Item>
 

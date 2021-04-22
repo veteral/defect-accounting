@@ -3,7 +3,7 @@ const router = new Router();
 const controller = require("../controllers/reportsController");
 
 router.get("/log/:start/:end", controller.getLog);
-//router.get("/analysis", controller.getAllDefects);
+router.get("/analysis/:start/:end/:period", controller.getAnalysis);
 //router.post("/add", controller.addObject);
 //router.get("/", controller.getControl);
 //router.post("/defects/add", controller.addDefect);
