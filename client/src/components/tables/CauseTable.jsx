@@ -4,8 +4,8 @@ export const CauseTable = ({ data }) => {
     const columns = [
         {
             title: "Наименование (длинное)",
-            dataIndex: "Name_L",
-            key: "Name_L",
+            dataIndex: "nameL",
+            key: "nameL",
             sorter: (a, b) => {
                 if (a.name < b.name) {
                     return -1;
@@ -19,19 +19,19 @@ export const CauseTable = ({ data }) => {
         },
         {
             title: "Наименование (среднее)",
-            dataIndex: "Name_S",
-            key: "Name_S",
+            dataIndex: "nameS",
+            key: "nameS",
         },
         {
             title: "Наименование (короткое)",
-            dataIndex: "Nm_chars",
-            key: "Nm_chars",
+            dataIndex: "nameC",
+            key: "nameC",
         },
     ];
 
     return (
         <>
-            <Table dataSource={data} columns={columns} />
+            <Table dataSource={data} columns={columns} pagination={false} />
         </>
     );
 };

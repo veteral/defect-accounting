@@ -5,7 +5,6 @@ const config = require("config");
 module.exports.getCauses = async (req, res) => {
     try {
         const causes = await Cause.find({});
-        console.log(causes)
         res.json(causes);
     } catch (e) {
         res.status(500).json({
