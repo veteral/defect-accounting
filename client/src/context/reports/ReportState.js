@@ -3,33 +3,42 @@ import { reportReducer } from "./reportReducer";
 import { ReportContext } from "./reportContext";
 import { request } from "../request";
 import { API_URL } from "../../config";
-import { GET_LOG, GET_ANALYSIS } from "../actionsType";
+import {
+    GET_LOG,
+    GET_ANALYSIS,
+    SHOW_PRELOADER,
+    HIDE_PRELOADER,
+} from "../actionsType";
 
 export const ReportState = ({ children }) => {
     const initialState = {
         log: [],
         analysis: [],
+        isPreloader: false,
     };
 
     const [state, dispatch] = useReducer(reportReducer, initialState);
 
     const printLog = async (values) => {
         const { startDate, endDate } = values;
-        //console.log("dateS", startDate);
+
         const payload = await request(
             `${API_URL}/reports/log/${startDate}/${endDate}`
         );
-        console.log("log state", payload);
+
         dispatch({ type: GET_LOG, payload });
     };
 
     const printAnalysis = async (values) => {
+        dispatch({ type: SHOW_PRELOADER, payload: true });
+
         const { startDate, endDate, period } = values;
-        //console.log("dateS", startDate);
+
         const payload = await request(
             `${API_URL}/reports/analysis/${startDate}/${endDate}/${period}`
         );
-        console.log("Analysis state", payload);
+
+        dispatch({ type: HIDE_PRELOADER, payload: false });
         dispatch({ type: GET_ANALYSIS, payload });
     };
 

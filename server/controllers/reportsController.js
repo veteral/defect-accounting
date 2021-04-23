@@ -1,15 +1,7 @@
-const config = require("config");
-const moment = require("moment");
-//const { getData, setData, setDataA } = require("./fileController");
-//const { v4: uuidv4 } = require("uuid");
-const Object = require("../models/Object");
 const Defect = require("../models/Defect");
-const mongoose = require("mongoose");
 
 module.exports.getLog = async (req, res) => {
     const { start, end } = req.params;
-
-    console.log(new Date(start));
 
     const log = await Defect.aggregate([
         {
@@ -53,21 +45,39 @@ module.exports.getLog = async (req, res) => {
         { $sort: { date: 1 } },
     ]);
 
-    console.log(log);
-
     res.status(201).json(log);
 };
 
 module.exports.getAnalysis = async (req, res) => {
     const { start, end, period } = req.params;
+    let periodDate;
+
+    switch (period) {
+        case "1":
+            periodDate = new Date(end).setMonth(new Date(end).getMonth() - 2);
+            break;
+        case "2":
+            periodDate = new Date(end).setMonth(new Date(end).getMonth() - 6);
+            break;
+        case "3":
+            periodDate = new Date(end).setMonth(new Date(end).getMonth() - 12);
+            break;
+        case "4":
+            periodDate = new Date("2007-01-01");
+            break;
+        default:
+            periodDate = new Date("2007-01-01");
+    }
 
     const reports = await Defect.aggregate([
         // выбираем срабатывания за период
         {
             $match: {
-                date: {
-                    $gte: new Date(start),
-                    $lte: new Date(end),
+                $expr: {
+                    $and: [
+                        { $gte: ["$date", new Date(start)] },
+                        { $lte: ["$date", new Date(end)] },
+                    ],
                 },
             },
         },
@@ -96,20 +106,10 @@ module.exports.getAnalysis = async (req, res) => {
                 password: "$object.passwords",
             },
         },
-
-        // "pipeline":[
-        //     {"$match":{"$expr":{"$in":["$userID","$$appliedUsers"]}}},
-        //     {"$addFields":{
-        //       "status":{"$cond":[{"$in":["$userID","$$shortListedUsers"]},"shortlisted","not shortlisted"]}
-        //     }}
-        //   ],
-
         {
             $lookup: {
                 from: "defects",
-                //localField: "_id",
-                //foreignField: "objectId",
-                let: { defectId: "$_id", dateStart: new Date("2021-04-01") },
+                let: { defectId: "$_id", dateStart: new Date(periodDate) },
                 pipeline: [
                     {
                         $match: {
@@ -125,27 +125,8 @@ module.exports.getAnalysis = async (req, res) => {
                 as: "defect",
             },
         },
-
-        // {
-        //     $lookup: {
-        //         from: "defects",
-        //         localField: "_id",
-        //         foreignField: "objectId",
-        //         as: "defect",
-        //     },
-        // },
         { $unwind: "$defect" },
-        { $sort: { date: 1 } },
-
-        // {
-        //     $match: {
-        //         date: {
-        //             $gte: new Date(start),
-        //             $lte: new Date(end),
-        //         },
-        //     },
-        // },
-
+        { $sort: { "defect.date": 1 } },
         {
             $lookup: {
                 from: "causes",
@@ -159,11 +140,8 @@ module.exports.getAnalysis = async (req, res) => {
         {
             $project: {
                 _id: 1,
-                //name: 1,
-                //addrres: 1,
-                //passwords: 1,
-                //objectId: 1,
                 defects: {
+                    defectId: "$defect._id",
                     train: "$defect.train",
                     date: {
                         $dateToString: {
@@ -198,6 +176,7 @@ module.exports.getAnalysis = async (req, res) => {
                 address: "$object.address",
                 passwords: "$object.passwords",
                 defects: {
+                    defectId: 1,
                     train: 1,
                     date: 1,
                     time: 1,
@@ -205,77 +184,8 @@ module.exports.getAnalysis = async (req, res) => {
                 },
             },
         },
+        // { $sort: { defects.date: 1 } },
     ]);
-
-    // const reports = await Defect.aggregate([
-    //     {
-    //         $match: {
-    //             date: {
-    //                 $gte: new Date(start),
-    //                 $lte: new Date(end),
-    //             },
-    //         },
-    //     },
-    //     //{ $sort: { date: 1 } },
-    //     {
-    //         $lookup: {
-    //             from: "causes",
-    //             localField: "causeId",
-    //             foreignField: "_id",
-    //             as: "cs",
-    //         },
-    //     },
-    //     { $unwind: "$cs" },
-
-    //     {
-    //         $project: {
-    //             _id: 0,
-    //             objectId: 1,
-    //             defects: {
-    //                 train: "$train",
-    //                 date: {
-    //                     $dateToString: {
-    //                         format: "%d-%m-%G",
-    //                         date: "$date",
-    //                     },
-    //                 },
-    //                 time: "$time",
-    //                 cause: "$cs.nameL",
-    //             },
-    //         },
-    //     },
-    //     {
-    //         $group: {
-    //             _id: "$objectId",
-    //             defects: { $push: "$defects" },
-    //         },
-    //     },
-    //     {
-    //         $lookup: {
-    //             from: "objects",
-    //             localField: "_id",
-    //             foreignField: "_id",
-    //             as: "object",
-    //         },
-    //     },
-    //     { $unwind: "$object" },
-    //     {
-    //         $project: {
-    //             _id: 1,
-    //             name: "$object.name",
-    //             passwords: "$object.passwords",
-    //             address: "$object.address",
-    //             defects: {
-    //                 train: 1,
-    //                 date: 1,
-    //                 time: 1,
-    //                 cause: 1,
-    //             },
-    //         },
-    //     },
-    // ]);
-
-    //console.log("reports", reports);
 
     res.status(201).json(reports);
 };

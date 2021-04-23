@@ -1,15 +1,8 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ReportContext } from "../../../context/reports/reportContext";
-import {
-    Form,
-    Input,
-    Button,
-    DatePicker,
-    TimePicker,
-    Radio,
-    Select,
-} from "antd";
+import { Form, Button, DatePicker, Radio } from "antd";
+// import { format } from "url";
 
 const layout = {
     labelCol: {
@@ -32,26 +25,35 @@ const tailLayout1 = {
     },
 };
 
-const { Option } = Select;
-
 export const AnalysisReport = () => {
     const history = useHistory();
     const { printAnalysis } = useContext(ReportContext);
+    const [value, setValue] = useState(1);
 
     const onFinish = (values) => {
-        console.log("Success:", values);
+        //console.log("Success:", values);
 
         printAnalysis(values);
 
+        //console.log("start", values.startDate);
+
         const location = {
             pathname: "/reports/analysis/print",
-            state: {},
+            state: {
+                start: values.startDate.format("DD.MM.YYYY"),
+                end: values.endDate.format("DD.MM.YYYY"),
+            },
         };
         history.push(location);
     };
 
     const onFinishFailed = (errorInfo) => {
         console.log("Failed:", errorInfo);
+    };
+
+    const onChange = (e) => {
+        console.log("radio checked", e.target.value);
+        setValue(e.target.value);
     };
 
     return (
@@ -62,6 +64,9 @@ export const AnalysisReport = () => {
                 name="basic"
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
+                initialValues={{
+                    period: "1",
+                }}
             >
                 <Form.Item {...tailLayout}>
                     <Form.Item

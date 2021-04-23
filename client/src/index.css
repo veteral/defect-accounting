@@ -29,7 +29,8 @@ code {
     margin: 0 auto;
 }
 
-.analysis h1 {
+.analysis h1,
+h3 {
     text-align: center;
 }
 

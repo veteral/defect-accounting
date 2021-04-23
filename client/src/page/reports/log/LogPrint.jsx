@@ -4,7 +4,6 @@ import { ReportContext } from "../../../context/reports/reportContext";
 
 export const LogPrint = () => {
     const { state } = useContext(ReportContext);
-    console.log("print state", state);
 
     const columns = [
         {

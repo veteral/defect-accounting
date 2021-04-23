@@ -24,14 +24,12 @@ const tailLayout1 = {
     },
 };
 
-const { Option } = Select;
-
 export const LogReport = () => {
     const { printLog } = useContext(ReportContext);
     const history = useHistory();
 
     const onFinish = (values) => {
-        console.log("Success:", values);
+        //console.log("Success:", values);
 
         printLog(values);
 
@@ -56,26 +54,16 @@ export const LogReport = () => {
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
             >
-                <Form.Item
-                // style={{
-                //     display: "flex",
-                //     justifyContent: "center",
-                // }}
-                >
+                <Form.Item>
                     <Form.Item
                         name="startDate"
                         rules={[{ required: true, message: "Выберите дату!" }]}
-                        // style={{
-                        //     display: "inline-block",
-                        //     paddingRight: "30px",
-                        // }}
                     >
                         <DatePicker />
                     </Form.Item>
                     <Form.Item
                         name="endDate"
                         rules={[{ required: true, message: "Выберите время!" }]}
-                        // style={{ display: "inline-block" }}
                     >
                         <DatePicker />
                     </Form.Item>
