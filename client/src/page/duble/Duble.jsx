@@ -8,7 +8,7 @@ export const Duble = () => {
     const { state, getDuble } = useContext(ObjectContext);
 
     useEffect(() => {
-        getDuble();
+        //getDuble();
         // eslint-disable-next-line
     }, []);
 
@@ -16,11 +16,12 @@ export const Duble = () => {
 
     return (
         <>
-            {state.duble.length !== 0 ? (
+            {/* {state.duble.length !== 0 ? (
                 <ObjectsTable data={state.duble} />
             ) : (
                 <Preloader />
-            )}
+            )} */}
+            duble
         </>
     );
 };

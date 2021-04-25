@@ -7,7 +7,7 @@ import { Preloader } from "../../components/Preloader";
 
 export const Objects = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const { state, getAllObjects, setObject } = useContext(ObjectContext);
+    const { state, getAllObjects, addObject } = useContext(ObjectContext);
 
     useEffect(() => {
         getAllObjects();
@@ -19,7 +19,7 @@ export const Objects = () => {
     };
 
     const handleOk = (values) => {
-        setObject(values);
+        addObject(values);
         setIsModalVisible(false);
     };
 

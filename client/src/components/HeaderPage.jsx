@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { AddDefect } from "./addDefect/AddDefect";
 
 const { Header } = Layout;
+const { SubMenu } = Menu;
 
 export default function Headerpage() {
     return (
@@ -20,9 +21,20 @@ export default function Headerpage() {
                     <Menu.Item key="2">
                         <Link to={"/objects"}>Объекты</Link>
                     </Menu.Item>
-                    <Menu.Item key="3">
-                        <Link to={"/reports"}>Отчеты</Link>
-                    </Menu.Item>
+                    <SubMenu
+                        key="3"
+                        //icon={<SettingOutlined />}
+                        title="Отчеты"
+                    >
+                        <Menu.Item key="setting:1">
+                            <Link to={"/reports/log"}>Журнал срабатываний</Link>
+                        </Menu.Item>
+                        <Menu.Item key="setting:2">
+                            <Link to={"/reports/analysis"}>
+                                Анализ срабатываний объектов
+                            </Link>
+                        </Menu.Item>
+                    </SubMenu>
                     <Menu.Item key="4">
                         <Link to={"/cause"}>Виды срабатываний</Link>
                     </Menu.Item>

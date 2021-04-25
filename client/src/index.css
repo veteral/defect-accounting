@@ -15,9 +15,59 @@ code {
 }
 
 .reports {
-    width: 800px;
+    width: 600px;
     height: 500px;
-    border: 1px solid rgba(230, 217, 217, 0.5);
+    /* border: 1px solid rgba(230, 217, 217, 0.5); */
     margin: 50px auto;
-    box-shadow: 0 0 5px rgba(179, 180, 179, 0.5);
+    /* box-shadow: 0 0 5px rgba(179, 180, 179, 0.5); */
+    padding: 50px;
+}
+
+.analysis {
+    /* margin-bottom: 10px; */
+    width: 800px;
+    margin: 0 auto;
+}
+
+.analysis h1,
+h3 {
+    text-align: center;
+}
+
+.analysisSection {
+    margin-bottom: 10px;
+}
+
+.analysisObject {
+    font-size: 15px;
+    font-weight: bold;
+    padding: 5px;
+    /* line-height: 2; */
+    /* align-items: center; */
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.analysisObject span {
+    margin: 0 10px;
+}
+
+.analysisDefects {
+    padding-left: 40px;
+    display: flex;
+}
+
+.analysisDefects div {
+    margin-right: 30px;
+}
+
+.date {
+    width: 100px;
+}
+
+.time {
+    width: 80px;
+}
+
+.train {
+    width: 50px;
 }
