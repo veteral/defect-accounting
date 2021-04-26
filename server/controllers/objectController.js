@@ -48,27 +48,60 @@ module.exports.getAllObjects = async (req, res) => {
 };
 
 module.exports.addDefect = async (req, res) => {
+  console.log(req.body)
   try {
-    const { date, time } = req.body;
+    const { date, time, objectId, train } = req.body;
+    let control = false;
 
     const timeStr = moment(time).format("HH:mm");
-    const dateIso = moment().toISOString(date);
-
-    console.log(date);
-
+    
+    //Добавляем срабатывание в базу данных
     let addDefect = new Defect({
       ...req.body,
       time: timeStr,      
     });
 
-    await addDefect.save();
+    //await addDefect.save();
 
-    //console.log("send json");
+    // определяем, было ли 3 и более срабатываний шлейфа за предыдущих 30 дней
+    // елси да, то ставим объект на контроль
+    const ago30Days = new Date(date).setDate(new Date(date).getDate() - 30);
 
-    res.status(201).json(addDefect);
+    console.log("date", date);
+    console.log("new date", new Date(ago30Days));
+
+    const count = await Defect.aggregate([
+      {
+        $match: { objectId: mongoose.Types.ObjectId(objectId)}
+      },
+      {
+        $match: {
+          $expr: {
+              $and: [
+                  { $gte: ["$date", new Date(ago30Days)] },
+                  { $lte: ["$date", new Date(date)] },
+                  { $eq: ["$train", train]}
+              ],
+          },
+      },
+      },
+      {"$count" : "count"}
+      
+    ]);
+
+    if(count[0].count >= 3){
+      control = true;
+    }
+      
+
+    
+
+    console.log("send json", count);
+
+    //res.status(201).json(addDefect);
   } catch (e) {
     console.log(
-      `При добавлении срабатывания, в объект с id - ${id}, произошла ошибка - ${e}`
+      `При добавлении срабатывания, произошла ошибка - ${e}`
     );
     res.status(500);
   }
