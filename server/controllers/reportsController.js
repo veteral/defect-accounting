@@ -50,8 +50,8 @@ module.exports.getLog = async (req, res) => {
 
 module.exports.getAnalysis = async (req, res) => {
     const { start, end, period } = req.params;
-    let periodDate;
 
+    console.log("start");
     switch (period) {
         case "1":
             periodDate = new Date(end).setMonth(new Date(end).getMonth() - 2);
@@ -69,7 +69,7 @@ module.exports.getAnalysis = async (req, res) => {
             periodDate = new Date("2007-01-01");
     }
 
-    const reports = await Defect.aggregate([
+    const alarmObjects = await Defect.aggregate([
         // выбираем срабатывания за период
         {
             $match: {
@@ -81,18 +81,13 @@ module.exports.getAnalysis = async (req, res) => {
                 },
             },
         },
-        // из полученного результата получаем id объектов котрые сработали
-        {
-            $group: {
-                _id: "$objectId",
-            },
-        },
-        // выбираем данные по сработаным объектам,
-        // разворачиваем полученный массив и формируем ввывод
+        { $sort: { date: 1 } },
+        // // выбираем данные по сработаным объектам,
+        // // разворачиваем полученный массив и формируем ввывод
         {
             $lookup: {
                 from: "objects",
-                localField: "_id",
+                localField: "objectId",
                 foreignField: "_id",
                 as: "object",
             },
@@ -100,92 +95,70 @@ module.exports.getAnalysis = async (req, res) => {
         { $unwind: "$object" },
         {
             $project: {
-                _id: 1,
+                _id: "$objectId",
                 name: "$object.name",
                 address: "$object.address",
                 password: "$object.passwords",
+                //date: "$date",
             },
         },
-        {
-            $lookup: {
-                from: "defects",
-                let: { defectId: "$_id", dateStart: new Date(periodDate) },
-                pipeline: [
-                    {
-                        $match: {
-                            $expr: {
-                                $and: [
-                                    { $eq: ["$$defectId", "$objectId"] },
-                                    { $gt: ["$date", "$$dateStart"] },
-                                ],
-                            },
-                        },
-                    },
-                ],
-                as: "defect",
-            },
-        },
-        { $unwind: "$defect" },
-        { $sort: { "defect.date": 1 } },
-        {
-            $lookup: {
-                from: "causes",
-                localField: "defect.causeId",
-                foreignField: "_id",
-                as: "cause",
-            },
-        },
-        { $unwind: "$cause" },
+    ]);
 
-        {
-            $project: {
-                _id: 1,
-                defects: {
-                    defectId: "$defect._id",
-                    train: "$defect.train",
+    let unicArrObjects = [];
+
+    // получаем массив уникальных объектов
+    for (const item of alarmObjects) {
+        let idx = unicArrObjects.find((i) => String(i._id) == String(item._id));
+        if (idx == undefined) {
+            item.defects = [];
+            unicArrObjects.push(item);
+        }
+    }
+
+    // к объектам добавляем массив срабатываний
+    for (const item of unicArrObjects) {
+        const defects = await Defect.aggregate([
+            //         // выбираем срабатывания за период
+            {
+                $match: {
+                    $expr: {
+                        $and: [
+                            { $eq: ["$objectId", item._id] },
+                            { $gt: ["$date", new Date(periodDate)] },
+                        ],
+                    },
+                },
+            },
+            { $sort: { date: 1 } },
+            // выбираем данные по сработаным объектам,
+            // разворачиваем полученный массив и формируем ввывод
+            {
+                $lookup: {
+                    from: "causes",
+                    localField: "causeId",
+                    foreignField: "_id",
+                    as: "cause",
+                },
+            },
+            { $unwind: "$cause" },
+            {
+                $project: {
+                    _id: 1,
+                    train: 1,
+                    time: 1,
                     date: {
                         $dateToString: {
                             format: "%d-%m-%G",
-                            date: "$defect.date",
+                            date: "$date",
                         },
                     },
-                    time: "$defect.time",
                     cause: "$cause.nameL",
                 },
             },
-        },
-        {
-            $group: {
-                _id: "$_id",
-                defects: { $push: "$defects" },
-            },
-        },
-        {
-            $lookup: {
-                from: "objects",
-                localField: "_id",
-                foreignField: "_id",
-                as: "object",
-            },
-        },
-        { $unwind: "$object" },
-        {
-            $project: {
-                _id: 1,
-                name: "$object.name",
-                address: "$object.address",
-                passwords: "$object.passwords",
-                defects: {
-                    defectId: 1,
-                    train: 1,
-                    date: 1,
-                    time: 1,
-                    cause: 1,
-                },
-            },
-        },
-        // { $sort: { defects.date: 1 } },
-    ]);
+        ]);
 
-    res.status(201).json(reports);
+        item.defects = [...defects];
+    }
+
+    res.status(201).json(unicArrObjects);
 };
