@@ -29,6 +29,11 @@ code {
     text-align: center;
 }
 
+/* .reports__log {
+    display: flex;
+    flex-wrap: wrap;
+} */
+
 .ant-form-horizontal .ant-form-item-label {
     width: 255px;
 }

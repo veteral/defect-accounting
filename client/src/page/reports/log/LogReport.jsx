@@ -13,13 +13,13 @@ const layout = {
 };
 const tailLayout = {
     wrapperCol: {
-        offset: 5,
+        offset: 9,
         //span: 16,
     },
 };
 const tailLayout1 = {
     wrapperCol: {
-        offset: 8,
+        offset: 9,
         //span: 16,
     },
 };
@@ -50,11 +50,12 @@ export const LogReport = () => {
             <h1>ЖУРНАЛ СРАБАТЫВАНИЙ</h1>
             <Form
                 // {...layout}
+                className="reports__log"
                 name="basic"
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
             >
-                <Form.Item>
+                <Form.Item {...tailLayout}>
                     <Form.Item
                         name="startDate"
                         rules={[{ required: true, message: "Выберите дату!" }]}
@@ -69,14 +70,14 @@ export const LogReport = () => {
                     </Form.Item>
                 </Form.Item>
 
-                <Form.Item
-                    name="print"
-                    style={{
-                        display: "inline-block",
-                        paddingRight: "10px",
-                    }}
-                >
-                    <Button type="primary" htmlType="submit">
+                <Form.Item {...tailLayout1} name="print">
+                    <Button
+                        style={{
+                            width: "135px",
+                        }}
+                        type="primary"
+                        htmlType="submit"
+                    >
                         Сформировать
                     </Button>
                 </Form.Item>
