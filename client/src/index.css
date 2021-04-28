@@ -21,6 +21,16 @@ code {
     margin: 50px auto;
     /* box-shadow: 0 0 5px rgba(179, 180, 179, 0.5); */
     padding: 50px;
+    display: flex;
+    flex-direction: column;
+}
+
+.reports h1 {
+    text-align: center;
+}
+
+.ant-form-horizontal .ant-form-item-label {
+    width: 255px;
 }
 
 .analysis {

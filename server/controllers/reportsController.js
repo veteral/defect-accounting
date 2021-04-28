@@ -57,12 +57,15 @@ module.exports.getAnalysis = async (req, res) => {
             periodDate = new Date(end).setMonth(new Date(end).getMonth() - 2);
             break;
         case "2":
-            periodDate = new Date(end).setMonth(new Date(end).getMonth() - 6);
+            periodDate = new Date(end).setMonth(new Date(end).getMonth() - 3);
             break;
         case "3":
-            periodDate = new Date(end).setMonth(new Date(end).getMonth() - 12);
+            periodDate = new Date(end).setMonth(new Date(end).getMonth() - 6);
             break;
         case "4":
+            periodDate = new Date(end).setMonth(new Date(end).getMonth() - 12);
+            break;
+        case "5":
             periodDate = new Date("2007-01-01");
             break;
         default:

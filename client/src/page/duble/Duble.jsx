@@ -2,6 +2,7 @@ import { useEffect, useContext } from "react";
 import { ObjectsTable } from "../../components/tables/ObjectsTable";
 import { Preloader } from "../../components/Preloader";
 import { ObjectContext } from "../../context/object/objectContext";
+import Filtertable from "../../components/tables/filtr";
 
 export const Duble = () => {
     //const { duble, getDuble } = useContext(DubleContext);
@@ -22,6 +23,7 @@ export const Duble = () => {
                 <Preloader />
             )} */}
             duble
+            <Filtertable />
         </>
     );
 };

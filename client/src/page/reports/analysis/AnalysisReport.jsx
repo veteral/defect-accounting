@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ReportContext } from "../../../context/reports/reportContext";
-import { Form, Button, DatePicker, Radio } from "antd";
+import { Form, Button, DatePicker, Radio, Space } from "antd";
 // import { format } from "url";
 
 const layout = {
@@ -90,10 +90,13 @@ export const AnalysisReport = () => {
 
                 <Form.Item name="period" label="период срабатывания:">
                     <Radio.Group>
-                        <Radio value="1">2 месяца</Radio>
-                        <Radio value="2">6 месяцев</Radio>
-                        <Radio value="3">год</Radio>
-                        <Radio value="4">все</Radio>
+                        <Space direction="vertical">
+                            <Radio value="1">2 месяца</Radio>
+                            <Radio value="2">3 месяца</Radio>
+                            <Radio value="3">6 месяцев</Radio>
+                            <Radio value="4">год</Radio>
+                            <Radio value="5">все</Radio>
+                        </Space>
                     </Radio.Group>
                 </Form.Item>
 
