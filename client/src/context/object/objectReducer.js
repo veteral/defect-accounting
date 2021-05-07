@@ -19,7 +19,7 @@ export const objectReducer = (state, action) => {
             console.log("GET_DEFECTS", action.payload);
             return {
                 ...state,
-                defects: [...action.payload],
+                defects: [...state.defects, action.payload],
             };
 
         case GET_DUBLE:

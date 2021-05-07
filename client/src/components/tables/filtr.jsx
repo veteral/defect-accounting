@@ -2,6 +2,8 @@
 //https://codesandbox.io/s/2xyy8mqwoj
 //codesandbox.io/s/cssing-parent-row-of-table-antd-forked-qtlns?file=/src/index.js
 
+//https://codesandbox.io/s/34w7km6o11?file=/index.js
+
 import React from "react";
 import { Table, Input, Button, Space } from "antd";
 import Highlighter from "react-highlight-words";
@@ -81,19 +83,6 @@ class Filtertable extends React.Component {
                     >
                         Reset
                     </Button>
-                    {/* <Button
-                        type="link"
-                        size="small"
-                        onClick={() => {
-                            confirm({ closeDropdown: false });
-                            this.setState({
-                                searchText: selectedKeys[0],
-                                searchedColumn: dataIndex,
-                            });
-                        }}
-                    >
-                        Filter
-                    </Button> */}
                 </Space>
             </div>
         ),
@@ -114,17 +103,6 @@ class Filtertable extends React.Component {
                 setTimeout(() => this.searchInput.select(), 100);
             }
         },
-        // render: (text) =>
-        //     this.state.searchedColumn === dataIndex ? (
-        //         <Highlighter
-        //             highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
-        //             searchWords={[this.state.searchText]}
-        //             autoEscape
-        //             textToHighlight={text ? text.toString() : ""}
-        //         />
-        //     ) : (
-        //         text
-        //     ),
     });
 
     handleSearch = (selectedKeys, confirm, dataIndex) => {

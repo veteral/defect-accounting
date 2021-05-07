@@ -7,7 +7,9 @@ import { Preloader } from "../../components/Preloader";
 
 export const Objects = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const { state, getAllObjects, addObject } = useContext(ObjectContext);
+    const { state, getAllObjects, addObject, getDefects } = useContext(
+        ObjectContext
+    );
 
     useEffect(() => {
         getAllObjects();
@@ -35,7 +37,11 @@ export const Objects = () => {
                 handleOnClick={showModal}
             />
             {state.objects.length !== 0 ? (
-                <ObjectsTable data={state.objects} />
+                <ObjectsTable
+                    data={state.objects}
+                    //defects={state.defects}
+                    getDefects={getDefects}
+                />
             ) : (
                 <Preloader />
             )}

@@ -107,19 +107,19 @@ module.exports.getAnalysis = async (req, res) => {
         },
     ]);
 
-    let unicArrObjects = [];
+    //let unicArrObjects = [];
 
     // получаем массив уникальных объектов
-    for (const item of alarmObjects) {
-        let idx = unicArrObjects.find((i) => String(i._id) == String(item._id));
-        if (idx == undefined) {
-            item.defects = [];
-            unicArrObjects.push(item);
-        }
-    }
+    // for (const item of alarmObjects) {
+    //     let idx = unicArrObjects.find((i) => String(i._id) == String(item._id));
+    //     if (idx == undefined) {
+    //         item.defects = [];
+    //         unicArrObjects.push(item);
+    //     }
+    // }
 
     // к объектам добавляем массив срабатываний
-    for (const item of unicArrObjects) {
+    for (const item of alarmObjects) {
         const defects = await Defect.aggregate([
             //         // выбираем срабатывания за период
             {
@@ -163,5 +163,5 @@ module.exports.getAnalysis = async (req, res) => {
         item.defects = [...defects];
     }
 
-    res.status(201).json(unicArrObjects);
+    res.status(201).json(alarmObjects);
 };

@@ -1,10 +1,10 @@
 import { Table } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
-import { useContext, useEffect } from "react";
-import { ObjectContext } from "../../context/object/objectContext";
+// import { useContext, useEffect } from "react";
+// import { ObjectContext } from "../../context/object/objectContext";
 
-export const DefectsTable = ({ objectId }) => {
-    const { state, getDefects } = useContext(ObjectContext);
+export const DefectsTable = ({ id, defects }) => {
+    // const { state } = useContext(ObjectContext);
     const columns = [
         { title: "шлейф", dataIndex: "train", key: "train" },
         { title: "дата", dataIndex: "date", key: "date" },
@@ -18,19 +18,28 @@ export const DefectsTable = ({ objectId }) => {
         },
     ];
 
-    //const defects = [];
-    useEffect(() => {
-        getDefects(objectId);
-    }, []);
+    //console.log("state.defects - defects", defects);
+    //console.log("state.defects - state.defects", state.defects);
+    let def = [];
+    if (defects.length !== 0) {
+        const element = defects.find((f) => id === f.id);
+        //console.log("element", element);
+        if (element !== undefined && element.length !== 0) {
+            //console.log("id", id);
+            def = [...element.values];
+        }
+    }
 
     return (
         <>
-            <Table
-                rowKey="_id"
-                dataSource={state.defects}
-                columns={columns}
-                pagination={false}
-            />
+            {def.length > 0 ? (
+                <Table
+                    rowKey="_id"
+                    dataSource={def}
+                    columns={columns}
+                    pagination={false}
+                />
+            ) : null}
         </>
     );
 };

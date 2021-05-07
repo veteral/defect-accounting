@@ -105,7 +105,7 @@ module.exports.addDefect = async (req, res) => {
 module.exports.getDefects = async (req, res) => {
     const { id } = req.query;
 
-    console.log("objectId", id);
+    //console.log("objectId", id);
 
     const defects = await Defect.aggregate([
         //фильтруем сработки по id объекта
@@ -128,7 +128,7 @@ module.exports.getDefects = async (req, res) => {
             $project: {
                 _id: 1,
                 train: 1,
-                yearMonthDayUTC: {
+                date: {
                     $dateToString: { format: "%d-%m-%Y", date: "$date" },
                 },
                 time: 1,

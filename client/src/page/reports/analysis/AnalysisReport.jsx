@@ -1,17 +1,17 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { ReportContext } from "../../../context/reports/reportContext";
 import { Form, Button, DatePicker, Radio, Space } from "antd";
 // import { format } from "url";
 
-const layout = {
-    labelCol: {
-        span: 8,
-    },
-    wrapperCol: {
-        span: 16,
-    },
-};
+// const layout = {
+//     labelCol: {
+//         span: 8,
+//     },
+//     wrapperCol: {
+//         span: 16,
+//     },
+// };
 const tailLayout = {
     wrapperCol: {
         offset: 5,
@@ -28,7 +28,7 @@ const tailLayout1 = {
 export const AnalysisReport = () => {
     const history = useHistory();
     const { printAnalysis } = useContext(ReportContext);
-    const [value, setValue] = useState(1);
+    //const [value, setValue] = useState(1);
 
     const onFinish = (values) => {
         //console.log("Success:", values);
@@ -51,10 +51,10 @@ export const AnalysisReport = () => {
         console.log("Failed:", errorInfo);
     };
 
-    const onChange = (e) => {
-        console.log("radio checked", e.target.value);
-        setValue(e.target.value);
-    };
+    // const onChange = (e) => {
+    //     console.log("radio checked", e.target.value);
+    //     setValue(e.target.value);
+    // };
 
     return (
         <div className="reports">

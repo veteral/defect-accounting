@@ -21,16 +21,16 @@ export const AnalysisPrint = () => {
             {state.isPreloder ? (
                 <Preloader />
             ) : (
-                state.analysis.map((e) => (
-                    <div key={e._id} className="analysisSection">
+                state.analysis.map((e, index) => (
+                    <div key={index} className="analysisSection">
                         <div className="analysisObject">
                             <span>{e.password}</span>
                             <span>{e.name}</span>
                             <span>{e.address}</span>
                         </div>
                         <div>
-                            {e.defects.map((i) => (
-                                <div className="analysisDefects" key={i._id}>
+                            {e.defects.map((i, index) => (
+                                <div className="analysisDefects" key={index}>
                                     <div className="date">{i.date}</div>
                                     <div className="time">{i.time}</div>
                                     <div className="train">{i.train} шл.</div>

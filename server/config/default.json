@@ -1,6 +1,5 @@
 {
     "serverPort": 5000,
     "pathDB": "E:\\PROJECTS\\defect-accounting\\server\\data\\",
-    "URL_API": "mongodb+srv://admin:admin@cloud.riuq2.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-
+    "DB": "triggered"
 }

@@ -21,7 +21,7 @@ export const ObjectState = ({ children }) => {
 
     const getAllObjects = async () => {
         const payload = await request(API_URL + "/objects");
-        console.log("payload", payload);
+        console.log("payload getAllObjects", payload);
         //console.log("payload objects", payload);
         dispatch({ type: GET_OBJECTS, payload });
     };
@@ -54,9 +54,15 @@ export const ObjectState = ({ children }) => {
     };
 
     const getDefects = async (objectId) => {
-        console.log("get defects - id", objectId);
-        const payload = await request(API_URL + "/defects?id=" + objectId);
+        //console.log("get defects - id", objectId);
+        const defects = await request(API_URL + "/defects?id=" + objectId);
+
+        let payload = {};
+        payload.id = objectId;
+        payload.values = [...defects];
+
         console.log("get defects", payload);
+
         //console.log("payload objects", payload);
         dispatch({ type: GET_DEFECTS, payload });
     };

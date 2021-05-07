@@ -1,16 +1,16 @@
-import { Form, Button, DatePicker, Select } from "antd";
+import { Form, Button, DatePicker } from "antd";
 import { useHistory } from "react-router-dom";
 import { useContext } from "react";
 import { ReportContext } from "../../../context/reports/reportContext";
 
-const layout = {
-    labelCol: {
-        span: 8,
-    },
-    wrapperCol: {
-        span: 16,
-    },
-};
+// const layout = {
+//     labelCol: {
+//         span: 8,
+//     },
+//     wrapperCol: {
+//         span: 16,
+//     },
+// };
 const tailLayout = {
     wrapperCol: {
         offset: 9,

@@ -5,7 +5,7 @@ const router = require("./routes/index");
 const mongoose = require("mongoose");
 
 const PORT = config.get("serverPort");
-//const URL_API = config.get("URL_API");
+const DB = config.get("DB");
 
 const app = express();
 app.use(cors());
@@ -15,7 +15,7 @@ app.use("/", router);
 
 async function start() {
     try {
-        await mongoose.connect("mongodb://localhost:27017/triggered", {
+        await mongoose.connect(`mongodb://localhost:27017/${DB}`, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useCreateIndex: true,
