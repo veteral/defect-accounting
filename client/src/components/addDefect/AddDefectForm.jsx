@@ -77,7 +77,7 @@ export const AddDefectForm = ({ form }) => {
                     rules={[{ required: true, message: "Выберите время!" }]}
                     style={{ display: "inline-block" }}
                 >
-                    <TimePicker placeholder="время" format={"HH:mm"} />
+                    <TimePicker placeholder="время" format={"HH-mm"} />
                 </Form.Item>
             </Form.Item>
             <Form.Item

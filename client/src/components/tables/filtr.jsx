@@ -74,14 +74,14 @@ class Filtertable extends React.Component {
                         size="small"
                         style={{ width: 90 }}
                     >
-                        Search
+                        Поиск
                     </Button>
                     <Button
                         onClick={() => this.handleReset(clearFilters)}
                         size="small"
                         style={{ width: 90 }}
                     >
-                        Reset
+                        Очистить
                     </Button>
                 </Space>
             </div>
