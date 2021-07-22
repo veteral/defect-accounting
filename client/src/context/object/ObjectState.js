@@ -62,7 +62,7 @@ export const ObjectState = ({ children }) => {
         payload.id = objectId;
         payload.values = [...defects];
 
-        console.log("get defects", payload);
+        //console.log("get defects", payload);
 
         //console.log("payload objects", payload);
         dispatch({ type: GET_DEFECTS, payload });
