@@ -7,7 +7,7 @@ import { Preloader } from "../../components/Preloader";
 
 export const Objects = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const { state, getAllObjects, addObject, getDefects } = useContext(
+    const { state, getAllObjects, addObject, getDefectsIdObject } = useContext(
         ObjectContext
     );
 
@@ -40,7 +40,7 @@ export const Objects = () => {
                 <ObjectsTable
                     data={state.objects}
                     //defects={state.defects}
-                    getDefects={getDefects}
+                    getDefectsIdObject={getDefectsIdObject}
                 />
             ) : (
                 <Preloader />

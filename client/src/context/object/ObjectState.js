@@ -8,6 +8,7 @@ import {
     ADD_OBJECT,
     GET_DEFECTS,
     GET_DUBLE,
+    DELETE_DEFECT,
 } from "../actionsType";
 
 export const ObjectState = ({ children }) => {
@@ -53,7 +54,7 @@ export const ObjectState = ({ children }) => {
         //dispatch({ type: ADD_DEFECT, payload });
     };
 
-    const getDefects = async (objectId) => {
+    const getDefectsIdObject = async (objectId) => {
         //console.log("get defects - id", objectId);
         const defects = await request(API_URL + "/defects?id=" + objectId);
 
@@ -76,6 +77,28 @@ export const ObjectState = ({ children }) => {
         //dispatch({ type: GET_DUBLE, payload });
     };
 
+    /**
+     * Удаляем срабатывание у объекта
+     */
+    const deleteDefect = async (defectId) => {
+        console.log("Start request deleteDefect", defectId);
+
+        const response = await request(
+            `${API_URL}/defects/${defectId}`,
+            "DELETE"
+        );
+
+        const status = await response.status;
+
+        if (status === 200) {
+            dispatch({ type: DELETE_DEFECT, payload: defectId });
+        }
+
+        //const payload = dubleObjects(objects);
+        //console.log("payload duble", objects);
+        //dispatch({ type: GET_DUBLE, payload });
+    };
+
     // function dubleObjects(objects) {
     //     return objects.filter((el) => el.duble === true);
     // }
@@ -88,7 +111,8 @@ export const ObjectState = ({ children }) => {
                 addObject,
                 addDefect,
                 getDuble,
-                getDefects,
+                getDefectsIdObject,
+                deleteDefect,
             }}
         >
             {children}

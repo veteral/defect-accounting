@@ -3,6 +3,7 @@ import {
     ADD_OBJECT,
     GET_DEFECTS,
     GET_DUBLE,
+    DELETE_DEFECT,
 } from "../actionsType";
 
 export const objectReducer = (state, action) => {
@@ -17,9 +18,28 @@ export const objectReducer = (state, action) => {
 
         case GET_DEFECTS:
             console.log("GET_DEFECTS", action.payload);
+            console.log("GET_DEFECTS-state", state.defects);
             return {
                 ...state,
                 defects: [...state.defects, action.payload],
+            };
+
+        case DELETE_DEFECT:
+            console.log("Delete:");
+            console.log("state.defects:", state.defects);
+            console.log("action.payload:", action.payload);
+
+            for (let element of state.defects) {
+                const el = element.values.filter(
+                    (item) => item._id !== action.payload
+                );
+
+                element.values = [...el];
+            }
+
+            return {
+                ...state,
+                defects: [...state.defects],
             };
 
         case GET_DUBLE:

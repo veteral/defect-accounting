@@ -1,14 +1,8 @@
-const config = require("config");
+//const config = require("config");
 const moment = require("moment");
-//const { getData, setData, setDataA } = require("./fileController");
-//const { v4: uuidv4 } = require("uuid");
 const Object = require("../models/Object");
 const Defect = require("../models/Defect");
 const mongoose = require("mongoose");
-
-//const path = config.get("pathDB");
-//const DBObjects = path + "objects.json";
-//const DBCause = path + "cause.json";
 
 module.exports.addObject = async (req, res) => {
     try {
@@ -102,7 +96,7 @@ module.exports.addDefect = async (req, res) => {
     }
 };
 
-module.exports.getDefects = async (req, res) => {
+module.exports.getDefectsIdObject = async (req, res) => {
     const { id } = req.query;
 
     //console.log("objectId", id);
@@ -135,8 +129,28 @@ module.exports.getDefects = async (req, res) => {
                 cause: "$cs.nameL",
             },
         },
+        { $sort: { date: 1 } },
     ]);
 
     //console.log("defects", defects);
     res.status(201).json(defects);
+};
+
+module.exports.deleteDefect = async (req, res) => {
+    console.log("Delte Defect", req.params.id);
+
+    try {
+        const { id } = req.params;
+        const defect = await Defect.findOne({ _id: id });
+        if (!defect) {
+            return res.status(400).json({ message: "file not found" });
+        }
+        await defect.remove();
+        return res
+            .status(200)
+            .json({ message: "File was deleted", status: 200 });
+    } catch (e) {
+        console.log(e);
+        return res.status(400).json({ message: "Dir is not empty" });
+    }
 };

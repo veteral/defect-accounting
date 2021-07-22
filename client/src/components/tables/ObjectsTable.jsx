@@ -4,7 +4,7 @@ import { Table, Input, Button, Space } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { DefectsTable } from "./DefectsTable";
 
-export const ObjectsTable = ({ data, getDefects }) => {
+export const ObjectsTable = ({ data, getDefectsIdObject }) => {
     const { state } = useContext(ObjectContext);
     const [searchText, setSearchText] = useState("");
     const [searchedColumn, setsearchedColumn] = useState("");
@@ -90,7 +90,7 @@ export const ObjectsTable = ({ data, getDefects }) => {
     };
 
     const onExpand = async (expanded, record) => {
-        await getDefects(record._id);
+        await getDefectsIdObject(record._id);
     };
 
     const columns = [

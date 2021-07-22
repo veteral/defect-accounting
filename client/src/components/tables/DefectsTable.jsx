@@ -1,10 +1,10 @@
-import { Table } from "antd";
+import { Table, Popconfirm } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
-// import { useContext, useEffect } from "react";
-// import { ObjectContext } from "../../context/object/objectContext";
+import { useContext } from "react";
+import { ObjectContext } from "../../context/object/objectContext";
 
 export const DefectsTable = ({ id, defects }) => {
-    // const { state } = useContext(ObjectContext);
+    const { deleteDefect } = useContext(ObjectContext);
     const columns = [
         { title: "шлейф", dataIndex: "train", key: "train" },
         { title: "дата", dataIndex: "date", key: "date" },
@@ -14,7 +14,16 @@ export const DefectsTable = ({ id, defects }) => {
             title: "действие",
             dataIndex: "action",
             key: "action",
-            render: () => <DeleteOutlined />,
+            render: (_, record) => (
+                <Popconfirm
+                    title="Удалить?"
+                    okText="Да"
+                    cancelText="Нет"
+                    onConfirm={() => deleteDefect(record._id)} //this.handleDelete(record.key)}
+                >
+                    <DeleteOutlined />
+                </Popconfirm>
+            ),
         },
     ];
 
