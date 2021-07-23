@@ -9,28 +9,28 @@ const layout = {
     },
 };
 
-export const ObjectForm = ({ form }) => {
+export const ObjectForm = ({ form, fields }) => {
+    console.log("fields - ", fields);
     return (
         <Form
             form={form}
             {...layout}
             name="basic"
-            fields={
-                [
-                    // {
-                    //     name: ["passwords"],
-                    //     value: "1-1-8",
-                    // },
-                    // {
-                    //     name: ["telefone"],
-                    //     value: "35-84-01",
-                    // },
-                    // {
-                    //     name: ["name"],
-                    //     value: "Магазин 'Смакота'",
-                    // },
-                ]
-            }
+            fields={[
+                ...fields,
+                // {
+                //     name: ["passwords"],
+                //     value: "1-1-8",
+                // },
+                // {
+                //     name: ["telefone"],
+                //     value: "35-84-01",
+                // },
+                // {
+                //     name: ["name"],
+                //     value: "Магазин 'Смакота'",
+                // },
+            ]}
         >
             <Form.Item
                 label="Пароль"

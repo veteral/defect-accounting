@@ -3,6 +3,12 @@ const Defect = require("../models/Defect");
 module.exports.getLog = async (req, res) => {
     const { start, end } = req.params;
 
+    console.log("start", start);
+    let startOfDay = new Date(start);
+    startOfDay.setHours(0, 0, 0, 0);
+
+    console.log("startOfDay", startOfDay);
+
     const log = await Defect.aggregate([
         {
             $match: {
@@ -45,6 +51,7 @@ module.exports.getLog = async (req, res) => {
         { $sort: { date: 1 } },
     ]);
 
+    console.log("log", log);
     res.status(201).json(log);
 };
 

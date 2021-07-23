@@ -1,12 +1,18 @@
 import { Modal, Form } from "antd";
 import { ObjectForm } from "./ObjectForm";
 
-export const ObjectModal = ({ isModalVisible, handleCancel, handleOk }) => {
-    const [form] = Form.useForm();
+export const ObjectModal = ({
+    isModalVisible,
+    handleCancel,
+    handleOk,
+    fields,
+    form,
+}) => {
+    // const [form] = Form.useForm();
     return (
         <>
             <Modal
-                title="Basic Modal"
+                title="Добавить/изменить объект"
                 visible={isModalVisible}
                 okText="Сохранить"
                 cancelText="Отмена"
@@ -22,7 +28,7 @@ export const ObjectModal = ({ isModalVisible, handleCancel, handleOk }) => {
                         });
                 }}
             >
-                <ObjectForm form={form} />
+                <ObjectForm form={form} fields={fields} />
             </Modal>
         </>
     );

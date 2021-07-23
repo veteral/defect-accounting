@@ -17,14 +17,12 @@ export const objectReducer = (state, action) => {
             return { ...state, objects: [...state.objects, action.payload] };
 
         case GET_DEFECTS:
-            console.log("GET_DEFECTS", action.payload);
-            console.log("GET_DEFECTS-state", state.defects);
-
+            // console.log("GET_DEFECTS", action.payload);
+            // console.log("GET_DEFECTS-state", state.defects);
             const defects = state.defects.filter(
                 (item) => item.id !== action.payload.id
             );
-
-            console.log("New Defects", defects);
+            //console.log("New Defects", defects);
 
             return {
                 ...state,
@@ -32,9 +30,9 @@ export const objectReducer = (state, action) => {
             };
 
         case DELETE_DEFECT:
-            console.log("Delete:");
-            console.log("state.defects:", state.defects);
-            console.log("action.payload:", action.payload);
+            // console.log("Delete:");
+            // console.log("state.defects:", state.defects);
+            // console.log("action.payload:", action.payload);
 
             for (let element of state.defects) {
                 const el = element.values.filter(

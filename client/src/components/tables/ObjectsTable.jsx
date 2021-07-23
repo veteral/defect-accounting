@@ -1,10 +1,14 @@
 import { useContext, useState } from "react";
 import { ObjectContext } from "../../context/object/objectContext";
-import { Table, Input, Button, Space } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
+import { Table, Input, Button, Space, Popconfirm } from "antd";
+import {
+    SearchOutlined,
+    DeleteOutlined,
+    FormOutlined,
+} from "@ant-design/icons";
 import { DefectsTable } from "./DefectsTable";
 
-export const ObjectsTable = ({ data, getDefectsIdObject }) => {
+export const ObjectsTable = ({ data, getDefectsIdObject, editingObject }) => {
     const { state } = useContext(ObjectContext);
     const [searchText, setSearchText] = useState("");
     const [searchedColumn, setsearchedColumn] = useState("");
@@ -98,15 +102,6 @@ export const ObjectsTable = ({ data, getDefectsIdObject }) => {
             title: "Пароль",
             dataIndex: "passwords",
             key: "passwords",
-            // sorter: (a, b) => {
-            //     if (a.name < b.name) {
-            //         return -1;
-            //     }
-            //     if (a.name > b.name) {
-            //         return 1;
-            //     }
-            //     return 0;
-            // },
             showSorterTooltip: false,
             ...getColumnSearchProps("passwords"),
         },
@@ -119,15 +114,6 @@ export const ObjectsTable = ({ data, getDefectsIdObject }) => {
             title: "Наименование",
             dataIndex: "name",
             key: "name",
-            // sorter: (a, b) => {
-            //     if (a.name < b.name) {
-            //         return -1;
-            //     }
-            //     if (a.name > b.name) {
-            //         return 1;
-            //     }
-            //     return 0;
-            // },
             showSorterTooltip: false,
             ...getColumnSearchProps("name"),
         },
@@ -141,6 +127,35 @@ export const ObjectsTable = ({ data, getDefectsIdObject }) => {
             title: "Прибор",
             dataIndex: "device",
             key: "device",
+        },
+        {
+            title: "действие",
+            dataIndex: "action",
+            key: "action",
+            render: (_, record) => {
+                return (
+                    <Space size="small">
+                        <a
+                            //href="javascript:;"
+                            href="#"
+                            onClick={() => editingObject(record)}
+                        >
+                            <FormOutlined style={{ color: "#000000" }} />
+                        </a>
+
+                        <Popconfirm
+                            title={`Удалить объект: "${record.name}"?`}
+                            okText="Да"
+                            cancelText="Нет"
+                            onConfirm={() =>
+                                console.log("Click to Object", record)
+                            } //this.handleDelete(record.key)}
+                        >
+                            <DeleteOutlined />
+                        </Popconfirm>
+                    </Space>
+                );
+            },
         },
     ];
 
