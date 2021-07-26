@@ -9,7 +9,7 @@ import {
 import { DefectsTable } from "./DefectsTable";
 
 export const ObjectsTable = ({ data, getDefectsIdObject, editingObject }) => {
-    const { state } = useContext(ObjectContext);
+    const { state, deleteObject } = useContext(ObjectContext);
     const [searchText, setSearchText] = useState("");
     const [searchedColumn, setsearchedColumn] = useState("");
 
@@ -144,11 +144,12 @@ export const ObjectsTable = ({ data, getDefectsIdObject, editingObject }) => {
                         </a>
 
                         <Popconfirm
-                            title={`Удалить объект: "${record.name}"?`}
+                            //title={`Удалить объект: "${record.passwords}"?`}
                             okText="Да"
                             cancelText="Нет"
-                            onConfirm={() =>
-                                console.log("Click to Object", record)
+                            onConfirm={
+                                () => console.log("Click to Object", record)
+                                //deleteObject(record._id)
                             } //this.handleDelete(record.key)}
                         >
                             <DeleteOutlined />

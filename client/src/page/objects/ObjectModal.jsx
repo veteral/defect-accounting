@@ -1,4 +1,4 @@
-import { Modal, Form } from "antd";
+import { Modal } from "antd";
 import { ObjectForm } from "./ObjectForm";
 
 export const ObjectModal = ({

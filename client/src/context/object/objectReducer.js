@@ -4,17 +4,38 @@ import {
     GET_DEFECTS,
     GET_DUBLE,
     DELETE_DEFECT,
+    EDIT_OBJECT,
 } from "../actionsType";
 
 export const objectReducer = (state, action) => {
     switch (action.type) {
         case GET_OBJECTS:
-            console.log("GET_OBJECTS", action.payload);
+            //console.log("GET_OBJECTS", action.payload);
             return { ...state, objects: [...action.payload] };
 
         case ADD_OBJECT:
-            console.log("ADD_OBJECT", action.payload);
+            //console.log("ADD_OBJECT", action.payload);
             return { ...state, objects: [...state.objects, action.payload] };
+
+        case EDIT_OBJECT:
+            //console.log("EDIT_OBJECT", action.payload);
+
+            return {
+                ...state,
+                objects: [
+                    ...state.objects.map((item) => {
+                        if (action.payload.id === item._id) {
+                            console.log("Совпали");
+                            return {
+                                _id: action.payload.id,
+                                ...action.payload.values,
+                            };
+                        } else {
+                            return { ...item };
+                        }
+                    }),
+                ],
+            };
 
         case GET_DEFECTS:
             // console.log("GET_DEFECTS", action.payload);
@@ -47,11 +68,11 @@ export const objectReducer = (state, action) => {
                 defects: [...state.defects],
             };
 
-        case GET_DUBLE:
-            return {
-                ...state,
-                controls: [...action.payload],
-            };
+        // case GET_DUBLE:
+        //     return {
+        //         ...state,
+        //         controls: [...action.payload],
+        //     };
 
         default:
             return state;

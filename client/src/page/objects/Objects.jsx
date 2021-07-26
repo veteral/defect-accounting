@@ -9,9 +9,13 @@ import { Preloader } from "../../components/Preloader";
 export const Objects = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [object, setObject] = useState({});
-    const { state, getAllObjects, addObject, getDefectsIdObject } = useContext(
-        ObjectContext
-    );
+    const {
+        state,
+        getAllObjects,
+        addObject,
+        getDefectsIdObject,
+        editObject,
+    } = useContext(ObjectContext);
     const [form] = Form.useForm();
 
     useEffect(() => {
@@ -19,13 +23,13 @@ export const Objects = () => {
         // eslint-disable-next-line
     }, []);
 
-    const add = () => {
+    const handleAddObject = () => {
         setObject({ id: "-1", fields: [] });
         setIsModalVisible(true);
         console.log("Has Ok!", object);
     };
 
-    const edit = (record) => {
+    const handleEditObject = (record) => {
         const fields = [
             {
                 name: ["passwords"],
@@ -57,9 +61,11 @@ export const Objects = () => {
     const handleOk = (values) => {
         if (object.id === "-1") {
             console.log("Add new object", object);
-            //addObject(values);
+            addObject(values);
         } else {
-            console.log("Editing object", object);
+            console.log("Editing object", values);
+
+            editObject({ id: object.id, values: { ...values } });
         }
 
         setIsModalVisible(false);
@@ -75,14 +81,14 @@ export const Objects = () => {
             <FixedHeader
                 title={"Список объектов"}
                 buttonTitle={"Добавить объект"}
-                handleOnClick={add}
+                handleOnClick={handleAddObject}
             />
             {state.objects.length !== 0 ? (
                 <ObjectsTable
                     data={state.objects}
                     //defects={state.defects}
                     getDefectsIdObject={getDefectsIdObject}
-                    editingObject={edit}
+                    editingObject={handleEditObject}
                 />
             ) : (
                 <Preloader />

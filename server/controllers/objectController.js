@@ -4,6 +4,16 @@ const Object = require("../models/Object");
 const Defect = require("../models/Defect");
 const mongoose = require("mongoose");
 
+module.exports.getAllObjects = async (req, res) => {
+    try {
+        const objects = await Object.find({}).sort({ passwords: 1 });
+        res.status(201).json(objects);
+    } catch (e) {
+        console.log(`произошла ошибка - ${e}`);
+        res.status(500);
+    }
+};
+
 module.exports.addObject = async (req, res) => {
     try {
         console.log(req.body);
@@ -21,20 +31,42 @@ module.exports.addObject = async (req, res) => {
     }
 };
 
-module.exports.getControl = async (req, res) => {
+module.exports.editObject = async (req, res) => {
     try {
-        const control = await Object.find({ control: true });
-        res.status(201).json(control);
+        // const objects = await Object.find({}).sort({ passwords: 1 });
+        const id = req.params.id;
+        const values = req.body;
+
+        if (!id) {
+            return res
+                .status(400)
+                .json({ message: "file not found", status: 400 });
+        } else {
+            await Object.updateOne({ _id: id }, { ...values });
+            return res
+                .status(200)
+                .json({ message: "File was deleted", status: 200 });
+        }
     } catch (e) {
         console.log(`произошла ошибка - ${e}`);
         res.status(500);
     }
 };
 
-module.exports.getAllObjects = async (req, res) => {
+module.exports.deleteObject = async (req, res) => {
     try {
-        const objects = await Object.find({}).sort({ passwords: 1 });
-        res.status(201).json(objects);
+        // const objects = await Object.find({}).sort({ passwords: 1 });
+        // res.status(201).json(objects);
+    } catch (e) {
+        console.log(`произошла ошибка - ${e}`);
+        res.status(500);
+    }
+};
+
+module.exports.getControl = async (req, res) => {
+    try {
+        const control = await Object.find({ control: true });
+        res.status(201).json(control);
     } catch (e) {
         console.log(`произошла ошибка - ${e}`);
         res.status(500);
