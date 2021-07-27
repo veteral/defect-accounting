@@ -11,6 +11,7 @@ import {
     DELETE_DEFECT,
     DELETE_OBJECT,
     EDIT_OBJECT,
+    ADD_DUBLE,
 } from "../actionsType";
 
 export const ObjectState = ({ children }) => {
@@ -75,7 +76,12 @@ export const ObjectState = ({ children }) => {
         //     time: values.time.format("HH:mm:ss"),
         // };
 
-        const payload = await request(API_URL + "/defects/add", "POST", values);
+        console.log("add defect - ", values);
+        const isControl = await request(
+            API_URL + "/defects/add",
+            "POST",
+            values
+        );
 
         //const duble = dubleObjects(objects);
 
@@ -83,7 +89,10 @@ export const ObjectState = ({ children }) => {
         //     objects: [...objects],
         //     duble: [...duble],
         // };
-        //console.log("values posle", payload);
+        console.log("isControl", isControl);
+        if (isControl) {
+            dispatch({ type: ADD_DUBLE, payload: values });
+        }
         //dispatch({ type: ADD_DEFECT, payload });
     };
 
@@ -131,10 +140,6 @@ export const ObjectState = ({ children }) => {
         //console.log("payload duble", objects);
         //dispatch({ type: GET_DUBLE, payload });
     };
-
-    // function dubleObjects(objects) {
-    //     return objects.filter((el) => el.duble === true);
-    // }
 
     return (
         <ObjectContext.Provider

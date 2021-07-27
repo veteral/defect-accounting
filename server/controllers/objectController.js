@@ -79,10 +79,9 @@ module.exports.getControl = async (req, res) => {
 };
 
 module.exports.addDefect = async (req, res) => {
-    console.log(req.body);
     try {
         const { date, time, objectId, train } = req.body;
-        let control = false;
+        let isControl = false;
 
         const timeStr = moment(time).format("HH:mm");
 
@@ -96,37 +95,39 @@ module.exports.addDefect = async (req, res) => {
 
         // определяем, было ли 3 и более срабатываний шлейфа за предыдущих 30 дней
         // елси да, то ставим объект на контроль
-        // const ago30Days = new Date(date).setDate(new Date(date).getDate() - 30);
+        const ago30Days = new Date(date).setDate(new Date(date).getDate() - 30);
 
-        // console.log("date", date);
-        // console.log("new date", new Date(ago30Days));
+        console.log("date", date);
+        console.log("new date", new Date(ago30Days));
 
-        // const count = await Defect.aggregate([
-        //   {
-        //     $match: { objectId: mongoose.Types.ObjectId(objectId)}
-        //   },
-        //   {
-        //     $match: {
-        //       $expr: {
-        //           $and: [
-        //               { $gte: ["$date", new Date(ago30Days)] },
-        //               { $lte: ["$date", new Date(date)] },
-        //               { $eq: ["$train", train]}
-        //           ],
-        //       },
-        //   },
-        //   },
-        //   {"$count" : "count"}
+        const count = await Defect.aggregate([
+            {
+                $match: { objectId: mongoose.Types.ObjectId(objectId) },
+            },
+            {
+                $match: {
+                    $expr: {
+                        $and: [
+                            { $gte: ["$date", new Date(ago30Days)] },
+                            { $lte: ["$date", new Date(date)] },
+                            { $eq: ["$train", train] },
+                        ],
+                    },
+                },
+            },
+            { $count: "count" },
+        ]);
 
-        // ]);
-
-        // if(count[0].count >= 3){
-        //   control = true;
-        // }
+        console.log("count", count);
+        if (count[0].count >= 3) {
+            isControl = true;
+            await Object.updateOne({ _id: objectId }, { control: isControl });
+            console.log("control - TRUE");
+        }
 
         //console.log("send json", count);
 
-        res.status(201).json(addDefect);
+        res.status(201).json({ control: isControl });
     } catch (e) {
         console.log(`При добавлении срабатывания, произошла ошибка - ${e}`);
         res.status(500);

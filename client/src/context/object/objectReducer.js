@@ -6,12 +6,13 @@ import {
     DELETE_DEFECT,
     EDIT_OBJECT,
     DELETE_OBJECT,
+    ADD_DUBLE,
 } from "../actionsType";
 
 export const objectReducer = (state, action) => {
     switch (action.type) {
         case GET_OBJECTS:
-            //console.log("GET_OBJECTS", action.payload);
+            console.log("GET_OBJECTS", state);
             return { ...state, objects: [...action.payload] };
 
         case ADD_OBJECT:
@@ -48,6 +49,12 @@ export const objectReducer = (state, action) => {
                         (item) => action.payload !== item._id
                     ),
                 ],
+            };
+
+        case ADD_DUBLE:
+            return {
+                ...state,
+                controls: [...state.controls, action.payload],
             };
 
         case GET_DEFECTS:
