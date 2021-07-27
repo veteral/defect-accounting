@@ -45,7 +45,7 @@ module.exports.editObject = async (req, res) => {
             await Object.updateOne({ _id: id }, { ...values });
             return res
                 .status(200)
-                .json({ message: "File was deleted", status: 200 });
+                .json({ message: "File was edited", status: 200 });
         }
     } catch (e) {
         console.log(`произошла ошибка - ${e}`);
@@ -56,7 +56,12 @@ module.exports.editObject = async (req, res) => {
 module.exports.deleteObject = async (req, res) => {
     try {
         // const objects = await Object.find({}).sort({ passwords: 1 });
-        // res.status(201).json(objects);
+        await Defect.deleteMany({ objectId: req.params.id });
+        await Object.deleteOne({ _id: req.params.id });
+
+        return res
+            .status(200)
+            .json({ message: "File was deleted", status: 200 });
     } catch (e) {
         console.log(`произошла ошибка - ${e}`);
         res.status(500);

@@ -144,13 +144,10 @@ export const ObjectsTable = ({ data, getDefectsIdObject, editingObject }) => {
                         </a>
 
                         <Popconfirm
-                            //title={`Удалить объект: "${record.passwords}"?`}
+                            title={`Удалить объект: "${record.passwords}"?`}
                             okText="Да"
                             cancelText="Нет"
-                            onConfirm={
-                                () => console.log("Click to Object", record)
-                                //deleteObject(record._id)
-                            } //this.handleDelete(record.key)}
+                            onConfirm={() => deleteObject(record._id)} //this.handleDelete(record.key)}
                         >
                             <DeleteOutlined />
                         </Popconfirm>

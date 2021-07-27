@@ -50,13 +50,20 @@ export const ObjectState = ({ children }) => {
             dispatch({ type: EDIT_OBJECT, payload: { ...data } });
             //console.log("status - edit object", data);
         }
-        //dispatch({ type: ADD_OBJECT, payload });
+        //dispatch({ type: DELETE_OBJECT, payload });
     };
 
-    const deleteObject = async (values) => {
-        //const payload = await request(API_URL + "/objects/add", "POST", values);
-        //console.log(payload);
-        //dispatch({ type: ADD_OBJECT, payload });
+    const deleteObject = async (id) => {
+        const response = await request(
+            `${API_URL}/objects/delete/${id}`,
+            "DELETE"
+        );
+
+        const status = response.status;
+
+        if (status === 200) {
+            dispatch({ type: DELETE_OBJECT, payload: id });
+        }
     };
 
     const addDefect = async (values) => {

@@ -5,6 +5,7 @@ import {
     GET_DUBLE,
     DELETE_DEFECT,
     EDIT_OBJECT,
+    DELETE_OBJECT,
 } from "../actionsType";
 
 export const objectReducer = (state, action) => {
@@ -34,6 +35,18 @@ export const objectReducer = (state, action) => {
                             return { ...item };
                         }
                     }),
+                ],
+            };
+
+        case DELETE_OBJECT:
+            //console.log("EDIT_OBJECT", action.payload);
+
+            return {
+                ...state,
+                objects: [
+                    ...state.objects.filter(
+                        (item) => action.payload !== item._id
+                    ),
                 ],
             };
 
