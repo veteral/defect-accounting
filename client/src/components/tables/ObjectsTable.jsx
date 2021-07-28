@@ -8,8 +8,13 @@ import {
 } from "@ant-design/icons";
 import { DefectsTable } from "./DefectsTable";
 
-export const ObjectsTable = ({ data, getDefectsIdObject, editingObject }) => {
-    const { state, deleteObject } = useContext(ObjectContext);
+export const ObjectsTable = ({
+    data,
+    getDefectsIdObject,
+    editingObject,
+    duble,
+}) => {
+    const { state, deleteObject, deleteDuble } = useContext(ObjectContext);
     const [searchText, setSearchText] = useState("");
     const [searchedColumn, setsearchedColumn] = useState("");
 
@@ -133,7 +138,7 @@ export const ObjectsTable = ({ data, getDefectsIdObject, editingObject }) => {
             dataIndex: "action",
             key: "action",
             render: (_, record) => {
-                return (
+                return !duble ? (
                     <Space size="small">
                         <a
                             //href="javascript:;"
@@ -148,6 +153,17 @@ export const ObjectsTable = ({ data, getDefectsIdObject, editingObject }) => {
                             okText="Да"
                             cancelText="Нет"
                             onConfirm={() => deleteObject(record._id)} //this.handleDelete(record.key)}
+                        >
+                            <DeleteOutlined />
+                        </Popconfirm>
+                    </Space>
+                ) : (
+                    <Space size="small">
+                        <Popconfirm
+                            title={`Удалить повтор: "${record.passwords}"?`}
+                            okText="Да"
+                            cancelText="Нет"
+                            onConfirm={() => deleteDuble(record._id)} //this.handleDelete(record.key)}
                         >
                             <DeleteOutlined />
                         </Popconfirm>

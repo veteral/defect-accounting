@@ -68,7 +68,7 @@ module.exports.deleteObject = async (req, res) => {
     }
 };
 
-module.exports.getControl = async (req, res) => {
+module.exports.getDuble = async (req, res) => {
     try {
         const control = await Object.find({ control: true });
         res.status(201).json(control);
@@ -155,6 +155,7 @@ module.exports.getDefectsIdObject = async (req, res) => {
         },
         //разворачиваем массив
         { $unwind: "$cs" },
+        { $sort: { date: 1 } },
         //формируем новый вывод
         {
             $project: {
@@ -167,7 +168,7 @@ module.exports.getDefectsIdObject = async (req, res) => {
                 cause: "$cs.nameL",
             },
         },
-        { $sort: { date: 1 } },
+        // { $sort: { date: 1 } },
     ]);
 
     //console.log("defects", defects);
@@ -190,5 +191,26 @@ module.exports.deleteDefect = async (req, res) => {
     } catch (e) {
         console.log(e);
         return res.status(400).json({ message: "Dir is not empty" });
+    }
+};
+
+module.exports.deleteDuble = async (req, res) => {
+    try {
+        // const objects = await Object.find({}).sort({ passwords: 1 });
+        const id = req.params.id;
+
+        if (!id) {
+            return res
+                .status(400)
+                .json({ message: "file not found", status: 400 });
+        } else {
+            await Object.updateOne({ _id: id }, { control: false });
+            return res
+                .status(200)
+                .json({ message: "File was update", status: 200 });
+        }
+    } catch (e) {
+        console.log(`произошла ошибка - ${e}`);
+        res.status(500);
     }
 };

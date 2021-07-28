@@ -7,6 +7,7 @@ import {
     EDIT_OBJECT,
     DELETE_OBJECT,
     ADD_DUBLE,
+    DELETE_DUBLE,
 } from "../actionsType";
 
 export const objectReducer = (state, action) => {
@@ -51,12 +52,6 @@ export const objectReducer = (state, action) => {
                 ],
             };
 
-        case ADD_DUBLE:
-            return {
-                ...state,
-                controls: [...state.controls, action.payload],
-            };
-
         case GET_DEFECTS:
             // console.log("GET_DEFECTS", action.payload);
             // console.log("GET_DEFECTS-state", state.defects);
@@ -88,11 +83,27 @@ export const objectReducer = (state, action) => {
                 defects: [...state.defects],
             };
 
-        // case GET_DUBLE:
-        //     return {
-        //         ...state,
-        //         controls: [...action.payload],
-        //     };
+        case ADD_DUBLE:
+            return {
+                ...state,
+                controls: [...state.controls, action.payload],
+            };
+
+        case GET_DUBLE:
+            return {
+                ...state,
+                controls: [...action.payload],
+            };
+
+        case DELETE_DUBLE:
+            return {
+                ...state,
+                controls: [
+                    ...state.controls.filter(
+                        (item) => item.id !== action.payload.id
+                    ),
+                ],
+            };
 
         default:
             return state;

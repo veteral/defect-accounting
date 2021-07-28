@@ -1,14 +1,14 @@
 import { useEffect, useContext } from "react";
 import { ObjectsTable } from "../../components/tables/ObjectsTable";
 import { Preloader } from "../../components/Preloader";
+import { FixedHeader } from "../../components/FixedHeader";
 import { ObjectContext } from "../../context/object/objectContext";
 
 export const Duble = () => {
-    //const { duble, getDuble } = useContext(DubleContext);
-    const { state, getDuble } = useContext(ObjectContext);
+    const { state, getDuble, getDefectsIdObject } = useContext(ObjectContext);
 
     useEffect(() => {
-        //getDuble();
+        getDuble();
         // eslint-disable-next-line
     }, []);
 
@@ -16,12 +16,22 @@ export const Duble = () => {
 
     return (
         <>
-            {/* {state.duble.length !== 0 ? (
-                <ObjectsTable data={state.duble} />
+            <FixedHeader
+                title={"Список объектов на контроле"}
+                //buttonTitle={"Добавить объект"}
+                //handleOnClick={handleAddObject}
+            />
+            {state.controls.length !== 0 ? (
+                <ObjectsTable
+                    data={state.controls}
+                    //defects={state.defects}
+                    getDefectsIdObject={getDefectsIdObject}
+                    //editingObject={handleEditObject}
+                    duble={"true"}
+                />
             ) : (
                 <Preloader />
-            )} */}
-            duble
+            )}
         </>
     );
 };

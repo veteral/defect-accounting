@@ -7,6 +7,8 @@ export const GET_DEFECTS = "GET_DEFECTS";
 export const DELETE_DEFECT = "DELETE_DEFECT";
 
 export const ADD_DUBLE = "ADD_DUBLE";
+export const GET_DUBLE = "GET_DUBLE";
+export const DELETE_DUBLE = "DELETE_DUBLE";
 
 export const GET_LOG = "GET_LOG";
 export const GET_ANALYSIS = "GET_ANALYSIS";

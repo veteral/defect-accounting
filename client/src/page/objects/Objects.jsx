@@ -89,6 +89,7 @@ export const Objects = () => {
                     //defects={state.defects}
                     getDefectsIdObject={getDefectsIdObject}
                     editingObject={handleEditObject}
+                    duble={false}
                 />
             ) : (
                 <Preloader />
