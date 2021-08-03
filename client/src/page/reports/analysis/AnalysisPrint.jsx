@@ -6,10 +6,18 @@ import { Preloader } from "../../../components/Preloader";
 
 export const AnalysisPrint = () => {
     const { state } = useContext(ReportContext);
-    // const [isFetching, setFetching] = useState(true);
     const location = useLocation();
 
-    //console.log("print analysis", state.analysis);
+    const handleClickClose = (event) => {
+        event.preventDefault();
+
+        const index = event.target.id;
+
+        const idBlock = `analysisSection-${index}`;
+        const block = document.getElementById(idBlock);
+
+        block.className += " no-display";
+    };
 
     return (
         <div className="analysis">
@@ -22,12 +30,26 @@ export const AnalysisPrint = () => {
                 <Preloader />
             ) : (
                 state.analysis.map((e, index) => (
-                    <div key={index} className="analysisSection">
-                        <div className="analysisObject">
-                            <span>{e.password}</span>
-                            <span>{e.name}</span>
-                            <span>{e.address}</span>
+                    <div
+                        key={index}
+                        className="analysisSection"
+                        id={`analysisSection-${index}`}
+                    >
+                        <div className="headerAnalysis">
+                            <div className="analysisObject">
+                                <span>{e.password}</span>
+                                <span>{e.name}</span>
+                                <span>{e.address}</span>
+                            </div>
+                            <div
+                                className="close no-print"
+                                id={index}
+                                onClick={handleClickClose}
+                            >
+                                x
+                            </div>
                         </div>
+
                         <div>
                             {e.defects.map((i, index) => (
                                 <div className="analysisDefects" key={index}>

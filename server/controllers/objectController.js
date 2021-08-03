@@ -137,7 +137,7 @@ module.exports.addDefect = async (req, res) => {
 module.exports.getDefectsIdObject = async (req, res) => {
     const { id } = req.query;
 
-    //console.log("objectId", id);
+    console.log("objectId", id);
 
     const defects = await Defect.aggregate([
         //фильтруем сработки по id объекта

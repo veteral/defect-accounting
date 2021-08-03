@@ -1,4 +1,4 @@
-const { model, Schema, ObjectId } = require("mongoose");
+const { model, Schema } = require("mongoose");
 
 const ObjectSchema = new Schema({
     // _id: { type: ObjectId, required: true },
@@ -8,7 +8,7 @@ const ObjectSchema = new Schema({
     telefone: { type: String },
     device: { type: String },
     control: { type: Boolean, default: false },
-    defects: [{ type: ObjectId, ref: "Defect" }], //????????????
+    //defects: [{ type: ObjectId, ref: "Defect" }], //????????????
 });
 
 module.exports = model("Object", ObjectSchema);

@@ -70,14 +70,16 @@ export const ObjectState = ({ children }) => {
 
     const addDefect = async (values) => {
         //console.log("add defect - ", values);
-        const isControl = await request(
+        const response = await request(
             API_URL + "/defects/add",
             "POST",
             values
         );
 
-        //console.log("isControl", isControl);
-        if (isControl) {
+        console.log("isControl", response);
+        if (response.control) {
+            console.log("isControl - true");
+            console.log("values - add-duble", values);
             dispatch({ type: ADD_DUBLE, payload: values });
         }
         //dispatch({ type: ADD_DEFECT, payload });

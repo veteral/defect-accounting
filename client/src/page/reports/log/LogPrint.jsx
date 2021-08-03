@@ -45,7 +45,9 @@ export const LogPrint = () => {
     return state.log ? (
         <div>
             <h1>ЖУРНАЛ СРАБАТЫВАНИЙ</h1>
-            <h3>за период с 01.01.2021 по 31.01.2021</h3>
+            {/* <h3>
+                c {location.state.start} по {location.state.end}
+            </h3> */}
             <Table rowKey="_id" dataSource={state.log} columns={columns} />;
         </div>
     ) : (
