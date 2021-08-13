@@ -5,6 +5,7 @@ import {
     SearchOutlined,
     DeleteOutlined,
     FormOutlined,
+    PrinterOutlined,
 } from "@ant-design/icons";
 import { DefectsTable } from "./DefectsTable";
 
@@ -133,56 +134,106 @@ export const ObjectsTable = ({
             dataIndex: "device",
             key: "device",
         },
-        {
-            title: "действие",
-            dataIndex: "action",
-            key: "action",
-            render: (_, record) => {
-                return !duble ? (
-                    <Space size="small">
-                        <a
-                            //href="javascript:;"
-                            href="#"
-                            onClick={() => editingObject(record)}
-                        >
-                            <FormOutlined style={{ color: "#000000" }} />
-                        </a>
+    ];
 
-                        <Popconfirm
-                            title={`Удалить объект: "${record.passwords}"?`}
-                            okText="Да"
-                            cancelText="Нет"
-                            onConfirm={() => deleteObject(record._id)} //this.handleDelete(record.key)}
-                        >
-                            <DeleteOutlined />
-                        </Popconfirm>
-                    </Space>
-                ) : (
-                    <Space size="small">
-                        <Popconfirm
-                            title={`Удалить повтор: "${record.passwords}"?`}
-                            okText="Да"
-                            cancelText="Нет"
-                            onConfirm={() => deleteDuble(record._id)} //this.handleDelete(record.key)}
-                        >
-                            <DeleteOutlined />
-                        </Popconfirm>
-                    </Space>
-                );
-            },
+    const defectColumns = [
+        {
+            title: "Дата повтора",
+            dataIndex: "date",
+            key: "date",
+            showSorterTooltip: false,
+        },
+        {
+            title: "Шлейф",
+            dataIndex: "train",
+            key: "train",
+            showSorterTooltip: false,
         },
     ];
+
+    const actionColumn = {
+        title: "действие",
+        dataIndex: "action",
+        key: "action",
+        render: (_, record) => {
+            return !duble ? (
+                <Space size="small">
+                    <a
+                        //href="javascript:;"
+                        href="#"
+                        onClick={() => editingObject(record)}
+                    >
+                        <FormOutlined style={{ color: "#ff0000" }} />
+                    </a>
+
+                    <Popconfirm
+                        title={`Удалить объект: "${record.passwords}"?`}
+                        okText="Да"
+                        cancelText="Нет"
+                        onConfirm={() => deleteObject(record._id)} //this.handleDelete(record.key)}
+                    >
+                        <DeleteOutlined />
+                    </Popconfirm>
+                </Space>
+            ) : (
+                <Space size="small">
+                    <Popconfirm
+                        title={`Удалить повтор: "${record.passwords}"?`}
+                        okText="Да"
+                        cancelText="Нет"
+                        onConfirm={() => deleteDuble(record._id)} //this.handleDelete(record.key)}
+                    >
+                        <DeleteOutlined />
+                        <PrinterOutlined
+                            style={
+                                record.isNewRecord
+                                    ? { color: "#ff0000" }
+                                    : { color: "#ff55ff" }
+                            }
+                        />
+                    </Popconfirm>
+                </Space>
+            );
+        },
+    };
 
     return (
         <>
             <Table
                 rowKey="_id"
                 dataSource={data}
-                columns={columns}
+                columns={
+                    !duble
+                        ? [...columns, actionColumn]
+                        : [...columns, ...defectColumns, actionColumn]
+                }
                 expandedRowRender={(record) => (
                     <DefectsTable id={record._id} defects={state.defects} />
                 )}
                 onExpand={onExpand}
+                // onRow={(record, rowIndex) => {
+                //     console.log("onRow");
+                //     return {
+                //         onClick: (event) => {
+                //             console.log("onClick - rowIndex", rowIndex);
+                //             console.log("onClick - record", record);
+                //         }, // click row
+                //         onDoubleClick: (event) => {}, // double click row
+                //         onContextMenu: (event) => {}, // right button click row
+                //         onMouseEnter: (event) => {}, // mouse enter row
+                //         onMouseLeave: (event) => {}, // mouse leave row
+
+                //     };
+                // }}
+                //onRow = () => state.dubles.isNewRecord && {className: "expand-parent"}
+                onHeaderRow={(columns, index) => {
+                    return {
+                        onClick: () => {
+                            console.log("onHeaderRow", columns);
+                            console.log("onHeaderRow", index);
+                        }, // click header row
+                    };
+                }}
             />
         </>
     );

@@ -2,6 +2,7 @@
 const moment = require("moment");
 const Object = require("../models/Object");
 const Defect = require("../models/Defect");
+const Duble = require("../models/Duble");
 const mongoose = require("mongoose");
 
 module.exports.getAllObjects = async (req, res) => {
@@ -19,11 +20,8 @@ module.exports.addObject = async (req, res) => {
         console.log(req.body);
 
         let object = new Object({ ...req.body });
-
         await object.save();
-
         //console.log("End");
-
         res.status(201).json(object);
     } catch (e) {
         console.log(`При добавлении объекта произошла ошибка - ${e}`);
@@ -81,7 +79,8 @@ module.exports.getDuble = async (req, res) => {
 module.exports.addDefect = async (req, res) => {
     try {
         const { date, time, objectId, train } = req.body;
-        let isControl = false;
+
+        //let duble = {};
 
         const timeStr = moment(time).format("HH:mm");
 
@@ -93,12 +92,14 @@ module.exports.addDefect = async (req, res) => {
 
         await addDefect.save();
 
+        console.log("addDefect", addDefect);
+
         // определяем, было ли 3 и более срабатываний шлейфа за предыдущих 30 дней
         // елси да, то ставим объект на контроль
         const ago30Days = new Date(date).setDate(new Date(date).getDate() - 30);
 
-        console.log("date", date);
-        console.log("new date", new Date(ago30Days));
+        //console.log("date", date);
+        //console.log("new date", new Date(ago30Days));
 
         const count = await Defect.aggregate([
             {
@@ -118,16 +119,51 @@ module.exports.addDefect = async (req, res) => {
             { $count: "count" },
         ]);
 
+        let response = {
+            code: 0,
+            duble: {},
+            isError: false,
+        };
+
         console.log("count", count);
-        if (count[0].count >= 3) {
-            isControl = true;
-            await Object.updateOne({ _id: objectId }, { control: isControl });
-            console.log("control - TRUE");
+
+        //Если срабатываний (count) === 3, значит это новый повтор
+        if (count[0].count === 3) {
+            const duble = await Duble.find({
+                objectId,
+                train,
+                isOldRecord: false,
+            });
+
+            console.log("duble", duble);
+
+            if (duble.length === 0) {
+                //это новый повтор, записываем в базу
+                const addDuble = new Duble({
+                    objectId,
+                    train,
+                    date,
+                });
+                await addDuble.save();
+
+                response.duble = addDuble;
+                response.code = 1;
+
+                console.log("новый повтор - запись создана");
+            } else if (duble.length === 1) {
+                //есть уже запись
+                console.log("такой повтор уже есть");
+            } else if (duble.length > 1) {
+                // непонятно. почему есть больше одной актуальной одинаковой записи. Может добавить новую запись с другим цветом
+                // + сообщить об ошибке
+                console.log("ОШИБКА! - найдено несколько актуальных записей!");
+                response.isError = true;
+            }
         }
 
-        //console.log("send json", count);
+        console.log("send json", response);
 
-        res.status(201).json({ control: isControl });
+        res.status(201).json(response);
     } catch (e) {
         console.log(`При добавлении срабатывания, произошла ошибка - ${e}`);
         res.status(500);
@@ -137,7 +173,7 @@ module.exports.addDefect = async (req, res) => {
 module.exports.getDefectsIdObject = async (req, res) => {
     const { id } = req.query;
 
-    console.log("objectId", id);
+    //console.log("objectId", id);
 
     const defects = await Defect.aggregate([
         //фильтруем сработки по id объекта
@@ -176,7 +212,7 @@ module.exports.getDefectsIdObject = async (req, res) => {
 };
 
 module.exports.deleteDefect = async (req, res) => {
-    console.log("Delte Defect", req.params.id);
+    //console.log("Delte Defect", req.params.id);
 
     try {
         const { id } = req.params;

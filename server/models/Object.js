@@ -7,7 +7,7 @@ const ObjectSchema = new Schema({
     passwords: { type: String, required: true },
     telefone: { type: String },
     device: { type: String },
-    control: { type: Boolean, default: false },
+    //control: { type: Boolean, default: false },
     //defects: [{ type: ObjectId, ref: "Defect" }], //????????????
 });
 

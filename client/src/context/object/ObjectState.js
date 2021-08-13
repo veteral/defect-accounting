@@ -18,7 +18,7 @@ import {
 export const ObjectState = ({ children }) => {
     const initialState = {
         objects: [],
-        controls: [],
+        dubles: [],
         defects: [],
     };
 
@@ -69,7 +69,7 @@ export const ObjectState = ({ children }) => {
     };
 
     const addDefect = async (values) => {
-        //console.log("add defect - ", values);
+        console.log("add defect - ", values);
         const response = await request(
             API_URL + "/defects/add",
             "POST",
@@ -77,10 +77,11 @@ export const ObjectState = ({ children }) => {
         );
 
         console.log("isControl", response);
-        if (response.control) {
-            console.log("isControl - true");
-            console.log("values - add-duble", values);
-            dispatch({ type: ADD_DUBLE, payload: values });
+
+        if (response.code === 1) {
+            console.log("isDuble - true");
+            console.log("values - add-duble", response);
+            //dispatch({ type: ADD_DUBLE, payload: values });
         }
         //dispatch({ type: ADD_DEFECT, payload });
     };

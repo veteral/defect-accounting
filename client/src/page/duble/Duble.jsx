@@ -14,6 +14,8 @@ export const Duble = () => {
 
     //if (duble.length === 0) return <Preloader />;
 
+    console.log(state);
+
     return (
         <>
             <FixedHeader
@@ -21,9 +23,9 @@ export const Duble = () => {
                 //buttonTitle={"Добавить объект"}
                 //handleOnClick={handleAddObject}
             />
-            {state.controls.length !== 0 ? (
+            {state.dubles.length !== 0 ? (
                 <ObjectsTable
-                    data={state.controls}
+                    data={state.dubles}
                     //defects={state.defects}
                     getDefectsIdObject={getDefectsIdObject}
                     //editingObject={handleEditObject}

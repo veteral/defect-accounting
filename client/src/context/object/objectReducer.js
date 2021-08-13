@@ -86,20 +86,21 @@ export const objectReducer = (state, action) => {
         case ADD_DUBLE:
             return {
                 ...state,
-                controls: [...state.controls, action.payload],
+                dubles: [...state.dubles, action.payload],
             };
 
         case GET_DUBLE:
+            console.log("GET_DUBLE", action.payload);
             return {
                 ...state,
-                controls: [...action.payload],
+                dubles: [...action.payload],
             };
 
         case DELETE_DUBLE:
             return {
                 ...state,
-                controls: [
-                    ...state.controls.filter(
+                dubles: [
+                    ...state.dubles.filter(
                         (item) => item.id !== action.payload.id
                     ),
                 ],
